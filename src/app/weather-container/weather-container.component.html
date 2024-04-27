@@ -1,0 +1,80 @@
+
+<div class="main-container p-5 max-w-7xl mx-auto mt-8 border-2 border-solid rounded-md border-sky-500 bg-white">
+
+        <mat-toolbar class="toolbar">
+            <span>WeatherApp</span>
+            <div class="flex w-96 rounded ">
+                <input 
+                    type="search" 
+                    name="search" 
+                    id="search" 
+                    placeholder="Search City" 
+                    class="w-full border-none bg-transparent px-4 py-1 text-gray-900 outline-none focus:outline-none">
+    
+                 <button class="m-2 rounded bg-teal-800 px-4 text-white">Search</button>   
+            </div>
+        </mat-toolbar>
+
+    <div class="upper-data relative h-56 mt-3 bg-pink-200">
+        <img class="absolute inset-0 object-cover h-full w-full z-10" src="../assets/cold4.jpg" *ngIf="14 <= 15">
+        <div class="absolute inset-0 flex items-center justify-around z-20">
+            <div>
+                <div class="temperature text-5xl font-bold text-white">123°C</div>
+                <div class="city text-white">City</div>
+            </div>
+            <div>
+                <div class="date text-5xl font-bold text-white">date</div>
+                <div class="time text-white">time</div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="lower-data container mt-3 h-72 bg-orange-200 flex flex-row justify-between">
+        <div class="container bg-yellow-200 flex flex-col justify-between max-w-md">
+            <div class="container bg-slate-200 flex flex-row justify-between h-28">
+                <div class="container flex flex-col justify-between">
+                    <div>
+                        <img src="../assets/humidity.png" class="w-10 h-10">
+                    </div>
+                    <div>
+                        <img src="../assets/sun.png" class="w-10 h-10">
+                    </div>
+                </div>
+                <div class="container flex flex-col justify-between">
+                    <div>
+                        <img src="../assets/sunset.png" class="w-10 h-10">
+                    </div>
+                    <img src="../assets/sunrise.png" class="w-10 h-10">
+                </div>
+            </div>
+            <div class="container h-20 bg-red-300">rainfall</div>
+        </div>
+        <div class="container bg-blue-300 flex flex-col p-2">
+            <div class=" bg-slate-500 h-10">3 Days forecast</div>
+            <div class="bg-orange-500 h-24">Graph</div>
+            <div class="container flex justify-between">
+                <div>
+                    today
+                </div>
+                <div>
+                    day1
+                </div>
+                <div>
+                    day2
+                </div>
+                <div>
+                    day3
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+        
+
+
+
+<!-- <div class="max-w-7xl h-5/6 mx-auto mt-12 p-6 border-2 border-solid rounded-md border-blue-500">
+    <p class="text-lg">This is the weather container</p>
+</div> -->
