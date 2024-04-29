@@ -8,5 +8,8 @@ export class TodaysHighlight{
     humidity:number;
     visibility:number;
     airQuality:number;
-    pressure:number
+    pressure:number;
+    maxTemp:number;
+    minTemp:number;
+    rainfall:number;
 }

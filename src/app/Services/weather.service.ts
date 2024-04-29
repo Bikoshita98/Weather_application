@@ -106,6 +106,11 @@ export class WeatherService {
     this.todaysHighlight.visibility = this.weatherDetails.current.vis_km;
     this.todaysHighlight.pressure = this.weatherDetails.current.pressure_mb;
     this.todaysHighlight.uvIndex = this.weatherDetails.current.uv;
+    this.todaysHighlight.sunrise = this.weatherDetails.forecast.forecastday[0].astro.sunrise;
+    this.todaysHighlight.sunset = this.weatherDetails.forecast.forecastday[0].astro.sunset;
+    this.todaysHighlight.uvIndex = this.weatherDetails.current.uv;
+    this.todaysHighlight.rainfall = this.weatherDetails.forecast.forecastday[0].day.daily_chance_of_rain;
+
   }
 
    //method to create useful data chunks for UI using the data received from the API
