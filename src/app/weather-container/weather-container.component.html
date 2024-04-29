@@ -1,5 +1,5 @@
 
-<div class="main-container p-5 max-w-7xl mx-auto mt-8 border-2 border-solid rounded-md border-sky-500 bg-white">
+<div class="main-container p-5 max-w-7xl mx-auto my-10 border-2 border-solid rounded-md border-sky-500 bg-white">
 
         <mat-toolbar class="toolbar">
             <span>WeatherApp</span>
@@ -8,80 +8,36 @@
                     type="search" 
                     name="search" 
                     id="search" 
-                    placeholder="Search City" 
+                    placeholder="Search City" #location (keyup.Enter)="onSearch(location.value)"
                     class="w-full border-none bg-transparent px-4 py-1 text-gray-900 outline-none focus:outline-none">
     
-                 <button class="m-2 rounded bg-teal-800 px-4 text-white">Search</button>   
+                 <button class="m-2 rounded bg-teal-800 px-4 text-white" (click)="onSearch(location.value)">Search</button>   
             </div>
         </mat-toolbar>
 
-    <div class="upper-data relative h-56 mt-3 bg-pink-200">
-        <img class="absolute inset-0 object-cover h-full w-full z-10" src="../assets/cold4.jpg" *ngIf="14 <= 15">
-        <div class="absolute inset-0 flex items-center justify-around z-20">
-            <div>
-                <img class="" src="{{this.weatherService.temperatureData.summaryImage}}" *ngIf="14 <= 15">
-                <div class="city text-black">{{this.weatherService.temperatureData.location}}</div>
-                <div class="temperature text-5xl font-bold text-black">{{this.weatherService.temperatureData.temperature}}°C</div>
-                <div class="city text-black">{{this.weatherService.temperatureData.summaryPhrase}}</div>
-            </div>
-            <div>
-                <div class="date text-5xl font-bold text-black">{{this.weatherService.temperatureData.date}}</div>
-                <div class="time text-black">{{this.weatherService.temperatureData.time}}</div>
-            </div>
-        </div>
-    </div>
-    
+    <div class="upper-data relative mt-3 bg-pink-200">
+        <img class="absolute inset-0 object-cover h-56 w-full z-10" src="../assets/cold8.jpg" *ngIf="14 <= 15">
+        
+            <span class="relative top-1 md:top-7 lg:top-6 left-14 md:left-20 lg:left-40 z-20">
+                <div>
+                    <img class="relative" src="{{this.weatherService.temperatureData.summaryImage}}">
+                    <div>
+                        <div class="relative text-sm md:text-base lg:text-lg text-black">{{this.weatherService.temperatureData.location}}</div>
+                        <div class="relative text-3xl md:text-5xl lg:text-6xl font-bold text-slate-800">
+                            {{ this.weatherService.temperatureData.temperature ? this.weatherService.temperatureData.temperature + '°C' : '' }}
+                        </div>
+                        <div class="relative text-sm md:text-base lg:text-lg text-black">{{this.weatherService.temperatureData.summaryPhrase}}</div>
+                    </div>
+                </div>
+            </span>
 
-    <div class="lower-data container mt-3 h-72 bg-orange-200 flex flex-row justify-between">
-        <div class="container bg-yellow-200 flex flex-col justify-between max-w-md">
-            <div class="container bg-slate-200 flex flex-row justify-between h-28">
-                <div class="container flex flex-col justify-between">
-                    <div>
-                        <img src="../assets/humidity.png" class="w-10 h-10">
-                    </div>
-                    <div>
-                        <img src="../assets/sun.png" class="w-10 h-10">
-                    </div>
-                </div>
-                <div class="container flex flex-col justify-between">
-                    <div>
-                        <img src="../assets/sunset.png" class="w-10 h-10">
-                    </div>
-                    <img src="../assets/sunrise.png" class="w-10 h-10">
+            <div class="relative">
+                <div class="absolute bottom-16 right-0 z-20 p-4">
+                    <div class="relative text-md md:text-l lg:text-xl font-bold text-slate-800">{{this.weatherService.temperatureData.date}}</div>
+                    <div class="text-black">{{this.weatherService.temperatureData.time}}</div>
                 </div>
             </div>
-            <div class="container h-20 bg-red-300">rainfall</div>
-        </div>
-        <div class="container bg-blue-300 flex flex-col p-2">
-            <div class=" bg-slate-500 h-10">3 Days forecast</div>
-            <div class="bg-orange-500 h-24">Graph</div>
-            <div class="container flex justify-between">
-                <div class="card" *ngFor="let card of weatherService.weekData">
-                    <div>card.day</div>
-                    <div><img src="" alt="">card img</div>
-                    <div><span>temp max</span> <span>temp min</span></div>
-                </div>
-                <!-- <div>
-                    today
-                </div>
-                <div>
-                    day1
-                </div>
-                <div>
-                    day2
-                </div>
-                <div>
-                    day3
-                </div> -->
-            </div>
-        </div>
     </div>
 
 </div>
         
-
-
-
-<!-- <div class="max-w-7xl h-5/6 mx-auto mt-12 p-6 border-2 border-solid rounded-md border-blue-500">
-    <p class="text-lg">This is the weather container</p>
-</div> -->

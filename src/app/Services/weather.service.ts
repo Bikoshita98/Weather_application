@@ -16,7 +16,7 @@ export class WeatherService {
 
   cityName:string = 'Guwahati';
   noOfDays:number = 4;
-
+  dateParts:string[];
   currentTime:Date;
   currentDate:string;
 
@@ -25,10 +25,12 @@ export class WeatherService {
   weatherDetails?: WeatherDetails;
 
   //variables that have the extracted data from the API endpoint variables
-  temperatureData: TemperatureData = new TemperatureData();
+  // temperatureData: TemperatureData = new TemperatureData();
+  temperatureData: TemperatureData;
   todayData?: TodayData[] = [];
   weekData?: Weekdata[] = []
   todaysHighlight?:TodaysHighlight = new TodaysHighlight();
+  formattedDate: string;
 
 
   constructor(private httpClient: HttpClient) {
@@ -36,7 +38,6 @@ export class WeatherService {
    }
 
    fillTemperatureDataModel(){
-
     this.currentTime = new Date();
     // this.currentDate = this.weatherDetails.forecast.forecastday[0].date;
     this.currentDate = this.weatherDetails.forecast.forecastday[0].date;
@@ -45,8 +46,29 @@ export class WeatherService {
     this.temperatureData.summaryImage = this.weatherDetails.current.condition.icon;
     this.temperatureData.summaryPhrase = this.weatherDetails.current.condition.text;
     this.temperatureData.location = this.weatherDetails.location.name;
-    this.temperatureData.date = this.weatherDetails.location.localtime.slice(0,10)
-    this.temperatureData.time = this.weatherDetails.location.localtime.slice(10,16)
+    
+    this.dateParts = this.weatherDetails.location.localtime.slice(0,10).split('-');
+    const year = parseInt(this.dateParts[0]);
+    const month = parseInt(this.dateParts[1]);
+    const day = parseInt(this.dateParts[2]);
+
+    const date1 = new Date(year, month - 1, day); // Month is 0-based in JavaScript Date object
+    const formattedDate = date1.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+    console.log("formattedDate",formattedDate);
+    // this.temperatureData.date = this.weatherDetails.location.localtime.slice(0,10);
+    this.temperatureData.date = formattedDate;
+
+    const timeString = this.weatherDetails.location.localtime.slice(11,16);
+    const [hours,minutes] = timeString.split(':').map(Number);
+
+    const date2 = new Date();
+    date2.setHours(hours);
+    date2.setMinutes(minutes);
+
+    const formattedTime = date2.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+
+    // this.temperatureData.time = this.weatherDetails.location.localtime.slice(10,16);
+    this.temperatureData.time = formattedTime;
    }
 
    //3 days data
@@ -55,6 +77,9 @@ export class WeatherService {
 
     while(weekCount < 3){
       this.weekData.push(new Weekdata());
+      this.weekData[weekCount].date = this.weatherDetails.forecast.forecastday[weekCount].date;
+      this.weekData[weekCount].summaryImage = this.weatherDetails.forecast.forecastday[weekCount].day.condition.icon;
+      this.weekData[weekCount].summaryText = this.weatherDetails.forecast.forecastday[weekCount].day.condition.text;
       this.weekData[weekCount].tempMax = this.weatherDetails.forecast.forecastday[weekCount].day.maxtemp_c;
       this.weekData[weekCount].tempMin = this.weatherDetails.forecast.forecastday[weekCount].day.mintemp_c;
       weekCount++;
@@ -119,6 +144,11 @@ export class WeatherService {
   }
 
   getData(){
+    this.todayData = [];
+    this.weekData = [];
+    this.temperatureData = new TemperatureData();
+    this.todaysHighlight = new TodaysHighlight();
+
     this.getLocationDetails(this.cityName).subscribe({
       next:(response)=>{
         this.locationDetails = response;

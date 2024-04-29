@@ -9,5 +9,10 @@ import { WeatherService } from '../Services/weather.service';
 
 
 export class WeatherContainerComponent {
+location: any;
   constructor(public weatherService:WeatherService){}
+  onSearch(location:string){
+    this.weatherService.cityName = location;
+    this.weatherService.getData();
+  }
 }
