@@ -100,8 +100,12 @@ export class WeatherService {
 
   //method to get today's highlight data
   fillTodaysHighlight(){
+    this.todaysHighlight.humidity = this.weatherDetails.current.humidity;
+    this.todaysHighlight.windSpeed = this.weatherDetails.current.wind_kph;
+    this.todaysHighlight.windDirection = this.weatherDetails.current.wind_dir;
+    this.todaysHighlight.visibility = this.weatherDetails.current.vis_km;
+    this.todaysHighlight.pressure = this.weatherDetails.current.pressure_mb;
     this.todaysHighlight.uvIndex = this.weatherDetails.current.uv;
-    this.todaysHighlight.windStatus = this.weatherDetails.current.wind_degree;
   }
 
    //method to create useful data chunks for UI using the data received from the API
@@ -118,6 +122,7 @@ export class WeatherService {
 
 
    //method to get location details from the API using the variable cityName as the Input
+
   getLocationDetails(cityName:string):Observable<LocationDetails>{
     return this.httpClient.get<LocationDetails>(EnvironmentalVariables.weatherApiForecastBaseUrl,{
       headers: new HttpHeaders()
@@ -127,7 +132,6 @@ export class WeatherService {
       .set('q',cityName)
 
     })
-
   }
 
   //method to get forecast details from the API using the variables cityName and noOfDays as the Input

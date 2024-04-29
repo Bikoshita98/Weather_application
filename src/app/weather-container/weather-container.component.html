@@ -41,27 +41,58 @@
     
     
 
-    <div class="lower-data container mt-16 h-72 bg-orange-200 flex flex-row justify-between">
-        <div class="container bg-yellow-200 flex flex-col justify-between max-w-md">
-            <div class="container bg-slate-200 flex flex-row justify-between h-28">
+    <!-- <div class="lower-data container mt-16 h-72 bg-orange-200 flex flex-row justify-between"> -->
+        <div class="mt-24 md:mt-20 lg:mt-16 lower-data container bg-orange-200 flex flex-col lg:flex-row lg:justify-between">
+
+        <div class="container bg-yellow-200 flex flex-col justify-between max-w-md">Today's Summary
+            <div class="container bg-slate-200 flex flex-row justify-between h-40">
                 <div class="container flex flex-col justify-between">
-                    <div>
+                    <span>Humidity</span>
+                    
+                    <div class="flex flex-row">
                         <img src="../assets/humidity.png" class="w-10 h-10">
+                        <span>{{this.weatherService.todaysHighlight.humidity? this.weatherService.todaysHighlight.humidity + ' %' : '' }}</span>
                     </div>
-                    <div>
+                    
+                    <span>Visibility</span>
+                    <div class="flex flex-row">
                         <img src="../assets/sun.png" class="w-10 h-10">
+                        <span>{{this.weatherService.todaysHighlight.visibility? this.weatherService.todaysHighlight.visibility + ' km' : '' }}</span>
                     </div>
                 </div>
                 <div class="container flex flex-col justify-between">
-                    <div>
+                    
+                    <span>Wind Speed</span>
+                    <div class="flex flex-row">
                         <img src="../assets/sunset.png" class="w-10 h-10">
+                        <span>{{this.weatherService.todaysHighlight.windSpeed? this.weatherService.todaysHighlight.windSpeed + ' kph' : '' }}</span>
                     </div>
-                    <img src="../assets/sunrise.png" class="w-10 h-10">
+
+                    <span>Wind Direction</span>
+                    <div class="flex flex-row">
+                        <img src="../assets/sunrise.png" class="w-10 h-10">
+                        <span>{{this.weatherService.todaysHighlight.windDirection? this.weatherService.todaysHighlight.windDirection : '' }}</span>
+                    </div>
+                </div>
+
+                <div class="container flex flex-col justify-between">
+                    <span>Pressure</span>
+                    <div class="flex flex-row">
+                        <img src="../assets/sunset.png" class="w-10 h-10">
+                        <span>{{this.weatherService.todaysHighlight.pressure? this.weatherService.todaysHighlight.pressure + ' mb' : '' }}</span>
+                    </div>
+
+                    <span>Uv index</span>
+                    <div class="flex flex-row">
+                        <img src="../assets/sunrise.png" class="w-10 h-10">
+                        <span>{{this.weatherService.todaysHighlight.uvIndex? this.weatherService.todaysHighlight.uvIndex : '' }}</span>
+                    </div>
                 </div>
             </div>
             <div class="container h-20 bg-red-300">rainfall</div>
         </div>
-        <div class="container bg-blue-300 flex flex-col p-2">
+
+        <div class="container bg-blue-300 flex flex-col p-2 ml-6">
             <div class=" bg-slate-500 h-10">3 Days forecast</div>
             <div class="bg-orange-500 h-24">Graph</div>
             <div class="container flex justify-between">
@@ -74,6 +105,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 
 </div>
