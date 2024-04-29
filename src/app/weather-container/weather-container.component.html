@@ -1,5 +1,5 @@
 
-<div class="main-container p-5 max-w-7xl mx-auto my-10 border-2 border-solid rounded-md border-sky-500 bg-white">
+<div class="main-container p-5 max-w-7xl mx-auto mt-8 border-2 border-solid rounded-md border-sky-500 bg-white">
 
         <mat-toolbar class="toolbar">
             <span>WeatherApp</span>
@@ -17,8 +17,8 @@
 
     <div class="upper-data relative mt-3 bg-pink-200">
         <img class="absolute inset-0 object-cover h-56 w-full z-10" src="../assets/cold8.jpg" *ngIf="14 <= 15">
-        
-            <span class="relative top-1 md:top-7 lg:top-6 left-14 md:left-20 lg:left-40 z-20">
+
+            <span class="relative top-2 md:top-7 lg:top-6 left-14 md:left-20 lg:left-40 bg-pink-200 z-20">
                 <div>
                     <img class="relative" src="{{this.weatherService.temperatureData.summaryImage}}">
                     <div>
@@ -37,6 +37,43 @@
                     <div class="text-black">{{this.weatherService.temperatureData.time}}</div>
                 </div>
             </div>
+    </div>
+    
+    
+
+    <div class="lower-data container mt-16 h-72 bg-orange-200 flex flex-row justify-between">
+        <div class="container bg-yellow-200 flex flex-col justify-between max-w-md">
+            <div class="container bg-slate-200 flex flex-row justify-between h-28">
+                <div class="container flex flex-col justify-between">
+                    <div>
+                        <img src="../assets/humidity.png" class="w-10 h-10">
+                    </div>
+                    <div>
+                        <img src="../assets/sun.png" class="w-10 h-10">
+                    </div>
+                </div>
+                <div class="container flex flex-col justify-between">
+                    <div>
+                        <img src="../assets/sunset.png" class="w-10 h-10">
+                    </div>
+                    <img src="../assets/sunrise.png" class="w-10 h-10">
+                </div>
+            </div>
+            <div class="container h-20 bg-red-300">rainfall</div>
+        </div>
+        <div class="container bg-blue-300 flex flex-col p-2">
+            <div class=" bg-slate-500 h-10">3 Days forecast</div>
+            <div class="bg-orange-500 h-24">Graph</div>
+            <div class="container flex justify-between">
+                <div class="card" *ngFor="let card of weatherService.weekData">
+                    <div>{{card.date}}</div>
+                    <div><img src={{card.summaryImage}} alt=""></div>
+                    <div>{{card.summaryText}}</div>
+                    <div>Min temp {{card.tempMin}}</div>
+                    <div>Max temp {{card.tempMax}}</div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>
