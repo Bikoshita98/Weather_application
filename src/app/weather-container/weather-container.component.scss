@@ -1,16 +1,19 @@
 .main-container{
-    height: 90vh;
+    height: 94vh;
+    border-color: #8b9aff;
 }
 
 .toolbar {
-    // background-color: aqua;
-    display: flex;
-    justify-content: space-between;
-    height:50px;
+    // height:50px;
 
 }
 
 .button-color{
         background-color: #8b9aff;
 }
+
+.button-color:hover{
+    background-color: #f3cac4;
+}
+
 

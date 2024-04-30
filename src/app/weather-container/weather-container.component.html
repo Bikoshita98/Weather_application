@@ -1,23 +1,11 @@
 
-<div class="main-container p-5 max-w-7xl mx-auto mt-8 border-2 border-solid rounded-md border-sky-500 bg-white">
+<div class="main-container p-5 max-w-7xl mx-auto mt-5 border-2 border-solid rounded-2xl border-sky-500 bg-white shadow-2xl">
 
-        <!-- <mat-toolbar class="toolbar bg-black">
-            <span>WeatherApp</span>
-            <div class="flex w-96 rounded ">
-                <input 
-                    type="search" 
-                    name="search" 
-                    id="search" 
-                    placeholder="Search City" #location (keyup.Enter)="onSearch(location.value)"
-                    class=" border-slate-200 px-4 py-1 m-3 text-gray-900 outline-none focus:outline-none">
-    
-                 <button class="m-2 rounded bg-teal-800 px-4 text-white" (click)="onSearch(location.value)">Search</button>   
+        <mat-toolbar class="flex justify-between bg-gray-800">
+            <div>
+                <span class=" text-slate-800 font-semibold text-sm md:text-md lg:text-lg">Weather App</span>
             </div>
-        </mat-toolbar> -->
-
-        <mat-toolbar class="toolbar bg-gray-800">
-            <span class=" text-slate-800 text-lg font-semibold">Weather App</span>
-            <div class="flex items-center space-x-4">
+            <div class="space-x-2">
                 <input 
                     type="search" 
                     name="search" 
@@ -25,14 +13,33 @@
                     placeholder="Search City" 
                     #location 
                     (keyup.Enter)="onSearch(location.value)"
-                    class="border border-gray-300 px-4 py-2 rounded-lg text-gray-900 outline-none focus:outline-none bg-gray-100">
-                <button class="button-color px-6 py-2 text-white font-semibold rounded-lg shadow-md hover:bg-teal-700" 
+                    class="w-24 sm:w-30 md:w-40 lg:w-50 xl:w-60 rounded-lg focus:outline-none border border-gray-300 text-gray-400 px-4 py-1 text-sm md:text-md lg:text-lg">
+                <!-- <input type="text" class="sm:w-64 md:w-80 lg:w-96 xl:w-120"> -->
+
+                <button class="button-color px-3 text-white font-semibold rounded-md shadow-md p-1 text-sm md:text-md lg:text-lg" (click)="onSearch(location.value)">Search</button>
+
+
+                <!-- <button class="button-color px-5 py-1 text-white font-semibold rounded-lg shadow-md" 
+                (click)="onSearch(location.value)">
+            Search
+        </button>   -->
+            </div>
+            <!-- <span class=" text-slate-800 text-lg font-semibold bg-green-300">Weather App</span>
+            <div class="flex items-center space-x-4 bg-purple-300">
+                <input 
+                    type="search" 
+                    name="search" 
+                    id="search" 
+                    placeholder="Search City" 
+                    #location 
+                    (keyup.Enter)="onSearch(location.value)"
+                    class="border border-gray-300 px-4 py-2 rounded-lg text-gray-900 outline-none focus:outline-none bg-gray-100 w-fit">
+                <button class="button-color sm:w-1 px-6 py-2 text-white font-semibold rounded-lg shadow-md" 
                         (click)="onSearch(location.value)">
                     Search
                 </button>   
-            </div>
+            </div> -->
         </mat-toolbar>
-        
 
     <div class="upper-data relative mt-3 bg-pink-200">
         <img class="absolute inset-0 object-cover h-56 w-full z-10" src="../assets/cold8.jpg" *ngIf="14 <= 15">
