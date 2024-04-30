@@ -1,9 +1,10 @@
-
-<div class="main-container p-5 max-w-7xl mx-auto mt-5 border-2 border-solid rounded-2xl border-sky-500 bg-white shadow-2xl">
-
-        <mat-toolbar class="flex justify-between bg-gray-800">
+<!-- <div class="flex items-center justify-center"> -->
+<!-- <div class="main-container p-5 max-w-7xl mx-auto my-2 border-2 border-solid rounded-2xl border-sky-500 bg-white shadow-2xl"> -->
+    <div class="main-container p-5 max-w-7xl mx-auto mt-1 sm:mt-2 md:mt-3 lg:mt-3 xl:mt-4 border-2 border-solid rounded-2xl border-sky-500 bg-white shadow-2xl">
+        <mat-toolbar class="flex justify-between bg-gray-800 rounded-md">
             <div>
-                <span class=" text-slate-800 font-semibold text-sm md:text-md lg:text-lg">Weather App</span>
+                <!-- <span class=" text-slate-800 font-semibold text-sm md:text-md lg:text-lg">Weather App</span> -->
+                <span class="font-semibold text-pink-300 sm:text-purple-500 md:text-green-500 lg:text-blue-600 xl:text-red-600 text-sm md:text-md lg:text-lg">Weather App</span>
             </div>
             <div class="space-x-2">
                 <input 
@@ -19,7 +20,9 @@
         </mat-toolbar>
 
     <div class="upper-data relative mt-3">
-        <img class="absolute inset-0 object-cover h-56 w-full z-10" src="../assets/cold8.jpg">
+        <!-- <img class="absolute inset-0 object-cover h-56 w-full z-10" src="../assets/cold8.jpg"> -->
+        <img class="absolute object-cover h-40 sm:h-44 md:h-52 lg:h-56 xl:h-60 w-full z-10 rounded-md" src="../assets/cold8.jpg">
+
 
             <span class="relative top-2 md:top-7 lg:top-6 left-14 md:left-20 lg:left-40 bg-pink-200 z-20">
                 <div>
@@ -42,86 +45,89 @@
             </div>
     </div>
     
-        <div class="mt-24 md:mt-20 lg:mt-16 lower-data container flex flex-col lg:flex-row lg:justify-between">
+        <!-- <div class="mt-8 md:mt-20 lg:mt-16 lower-data container flex flex-col lg:flex-row lg:justify-between"> -->
+            <div class="mt-7 sm:mt-12 md:mt-14 lg:mt-16 xl:mt-20 lower-data container flex flex-col lg:flex-row lg:justify-between">
 
         <div class="container border-slate-200 border-2 border-solid flex flex-col justify-around items-center max-w-md p-2 rounded-lg">
-            <span class="relative text-center font-bold text-slate-800">Today's Summary</span>
+            <div class="relative text-center font-bold text-red-500 text-xs md:text-sm lg:text-md p-2">Today's Summary</div>
             <div class="container flex flex-row justify-between">
-                <div class="container flex flex-col justify-between">
-                    <span class="relative font-bold text-blue-800">Rainfall</span>
+                <div class="container flex flex-col justify-between items-center">
+                    <span class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md">Rainfall</span>
                     
                     <div class="flex flex-row">
-                        <img src="../assets/rainfall.png" class="w-10 h-10">
-                        <span>{{this.weatherService.todaysHighlight.rainfall? this.weatherService.todaysHighlight.rainfall + ' %' : '' }}</span>
+                        <img src="../assets/rainfall.png" class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10">
+                        <span class="text-xs md:text-sm lg:text-md">{{this.weatherService.todaysHighlight.rainfall? this.weatherService.todaysHighlight.rainfall + ' %' : '' }}</span>
                     </div>
                     <br>
-                    <span class="relative font-bold text-blue-800">Humidity</span>
+                    <span class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md" >Humidity</span>
                     
                     <div class="flex flex-row">
-                        <img src="../assets/humidity.png" class="w-10 h-10">
-                        <span>{{this.weatherService.todaysHighlight.humidity? this.weatherService.todaysHighlight.humidity + ' %' : '' }}</span>
+                        <img src="../assets/humidity.png" class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10">
+                        <span class="text-xs md:text-sm lg:text-md">{{this.weatherService.todaysHighlight.humidity? this.weatherService.todaysHighlight.humidity + ' %' : '' }}</span>
                     </div>
                     <br>
-                    <span class="relative font-bold text-blue-800">Visibility</span>
+                    <span class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md">Visibility</span>
                     <div class="flex flex-row">
-                        <img src="../assets/vision.png" class="w-10 h-10">
-                        <span>{{this.weatherService.todaysHighlight.visibility? this.weatherService.todaysHighlight.visibility + ' km' : '' }}</span>
+                        <img src="../assets/vision.png" class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10">
+                        <span class="text-xs md:text-sm lg:text-md">{{this.weatherService.todaysHighlight.visibility? this.weatherService.todaysHighlight.visibility + ' km' : '' }}</span>
                     </div>
                 </div>
-                <div class="container flex flex-col justify-between">
+                <div class="container flex flex-col justify-between items-center">
                     
-                    <span class="relative font-bold text-blue-800">Wind Speed</span>
+                    <span class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md">Wind Speed</span>
                     <div class="flex flex-row">
-                        <img src="../assets/wind_s.png" class="w-10 h-10">
-                        <span>{{this.weatherService.todaysHighlight.windSpeed? this.weatherService.todaysHighlight.windSpeed + ' kph' : '' }}</span>
+                        <img src="../assets/wind_s.png" class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10">
+                        <span class="text-xs md:text-sm lg:text-md">{{this.weatherService.todaysHighlight.windSpeed? this.weatherService.todaysHighlight.windSpeed + ' kph' : '' }}</span>
                     </div>
                     <br>
-                    <span class="relative font-bold text-blue-800">Wind Direction</span>
+                    <span class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md">Wind Direction</span>
                     <div class="flex flex-row">
-                        <img src="../assets/wind-direction.png" class="w-10 h-10">
-                        <span>{{this.weatherService.todaysHighlight.windDirection? this.weatherService.todaysHighlight.windDirection : '' }}</span>
+                        <img src="../assets/wind-direction.png" class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10">
+                        <span class="text-xs md:text-sm lg:text-md">{{this.weatherService.todaysHighlight.windDirection? this.weatherService.todaysHighlight.windDirection : '' }}</span>
                     </div>
                     <br>
-                    <span class="relative font-bold text-blue-800">Sunrise</span>
+                    <span class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md">Sunrise</span>
                     <div class="flex flex-row">
-                        <img src="../assets/sunrise.png" class="w-10 h-10">
-                        <span>{{this.weatherService.todaysHighlight.sunrise? this.weatherService.todaysHighlight.sunrise : '' }}</span>
+                        <img src="../assets/sunrise.png" class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10">
+                        <span class="text-xs md:text-sm lg:text-md">{{this.weatherService.todaysHighlight.sunrise? this.weatherService.todaysHighlight.sunrise : '' }}</span>
                     </div>
                 </div>
 
-                <div class="container flex flex-col justify-between">
-                    <span class="relative font-bold text-blue-800">Pressure</span>
+                <div class="container flex flex-col justify-between items-center">
+                    <span class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md">Pressure</span>
                     <div class="flex flex-row">
-                        <img src="../assets/pressure.png" class="w-10 h-10">
-                        <span>{{this.weatherService.todaysHighlight.pressure? this.weatherService.todaysHighlight.pressure + ' mb' : '' }}</span>
+                        <img src="../assets/pressure.png" class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10">
+                        <span class="text-xs md:text-sm lg:text-md">{{this.weatherService.todaysHighlight.pressure? this.weatherService.todaysHighlight.pressure + ' mb' : '' }}</span>
                     </div>
                     <br>
-                    <span class="relative font-bold text-blue-800">Uv index</span>
+                    <span class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md">Uv index</span>
                     <div class="flex flex-row">
-                        <img src="../assets/uv-index.png" class="w-10 h-10">
-                        <span>{{this.weatherService.todaysHighlight.uvIndex? this.weatherService.todaysHighlight.uvIndex : '' }}</span>
+                        <img src="../assets/uv-index.png" class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10">
+                        <span class="text-xs md:text-sm lg:text-md">{{this.weatherService.todaysHighlight.uvIndex? this.weatherService.todaysHighlight.uvIndex : '' }}</span>
                     </div>
                     <br>
-                    <span class="relative font-bold text-blue-800">Sunset</span>
+                    <span class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md">Sunset</span>
                     <div class="flex flex-row">
-                        <img src="../assets/sunset.png" class="w-10 h-10">
-                        <span>{{this.weatherService.todaysHighlight.sunset? this.weatherService.todaysHighlight.sunset : '' }}</span>
+                        <img src="../assets/sunset.png" class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10">
+                        <span class="text-xs md:text-sm lg:text-md">{{this.weatherService.todaysHighlight.sunset? this.weatherService.todaysHighlight.sunset : '' }}</span>
                     </div>
                 </div>
             </div>
             <!-- <div class="container h-20 bg-red-300">rainfall</div> -->
         </div>
 
-        <div class="container border-slate-200 border-2 border-solid flex flex-col p-2 ml-6 rounded-lg">
+        <!-- <div class="container border-slate-200 border-2 border-solid flex flex-col p-2 ml-6 rounded-lg"> -->
+            <div class="mt-2 sm:mt-12 md:mt-14 lg:mt-16 xl:mt-20 container flex flex-col lg:flex-row lg:justify-between">
+
             <div class="bg-orange-500 h-24">Graph</div>
-            <div class="relative text-center font-bold text-slate-800"> Next 3 Days forecast</div><br>
+            <div class="relative text-center font-bold text-red-500 text-xs md:text-sm lg:text-md p-1"> Next 3 Days forecast</div>
             <div class="container flex justify-between">
                 <div class="card" *ngFor="let card of weatherService.weekData">
-                    <div class="relative font-bold text-blue-800">{{card.date}}</div>
-                    <div><img src={{card.summaryImage}} alt=""></div>
-                    <div class="relative font-bold text-red-600">{{card.summaryText}}</div>
-                    <div class="relative font-bold text-blue-800">Min temp : {{card.tempMin}}</div>
-                    <div class="relative font-bold text-blue-800">Max temp : {{card.tempMax}}</div>
+                    <div class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md">{{card.date}}</div>
+                    <img class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-14 xl:h-14" src={{card.summaryImage}} alt="">
+                    <div class="relative font-bold  text-red-500 text-xs md:text-sm lg:text-md">{{card.summaryText}}</div>
+                    <div class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md">Min temp : {{card.tempMin}}</div>
+                    <div class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md">Max temp : {{card.tempMax}}</div>
                 </div>
             </div>
         </div>
@@ -129,4 +135,4 @@
     </div>
 
 </div>
-        
+<!-- </div> -->
