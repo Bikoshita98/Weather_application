@@ -46,7 +46,7 @@
     </div>
     
         <!-- <div class="mt-8 md:mt-20 lg:mt-16 lower-data container flex flex-col lg:flex-row lg:justify-between"> -->
-            <div class="mt-7 sm:mt-12 md:mt-14 lg:mt-16 xl:mt-20 lower-data container flex flex-col lg:flex-row lg:justify-between">
+            <div class="mt-7 sm:mt-12 md:mt-20 lg:mt-16 xl:mt-20 lower-data container flex flex-col lg:flex-row lg:justify-between">
 
         <div class="container border-slate-200 border-2 border-solid flex flex-col justify-around items-center max-w-md p-2 rounded-lg">
             <div class="relative text-center font-bold text-red-500 text-xs md:text-sm lg:text-md p-2">Today's Summary</div>
@@ -117,12 +117,12 @@
         </div>
 
         <!-- <div class="container border-slate-200 border-2 border-solid flex flex-col p-2 ml-6 rounded-lg"> -->
-            <div class="mt-2 sm:mt-12 md:mt-14 lg:mt-16 xl:mt-20 container flex flex-col lg:flex-row lg:justify-between">
+            <div class="mt-2 sm:mt-12 md:mt-14 lg:mt-16 xl:mt-20 container flex flex-col lg:justify-between border-slate-200 border-2 border-solid lg:ml-6 rounded-lg p-2">
 
-            <div class="bg-orange-500 h-24">Graph</div>
+            <!-- <div class="bg-orange-500 h-24">Graph</div> -->
             <div class="relative text-center font-bold text-red-500 text-xs md:text-sm lg:text-md p-1"> Next 3 Days forecast</div>
-            <div class="container flex justify-between">
-                <div class="card" *ngFor="let card of weatherService.weekData">
+            <div class="container flex justify-between items-center">
+                <div class="card flex flex-col items-center" *ngFor="let card of weatherService.weekData">
                     <div class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md">{{card.date}}</div>
                     <img class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-14 xl:h-14" src={{card.summaryImage}} alt="">
                     <div class="relative font-bold  text-red-500 text-xs md:text-sm lg:text-md">{{card.summaryText}}</div>
