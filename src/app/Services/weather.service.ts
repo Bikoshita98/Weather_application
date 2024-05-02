@@ -90,11 +90,11 @@ export class WeatherService {
 
     while(weekCount < 3){
       this.weekData.push(new Weekdata());
-      this.weekData[weekCount].date = this.weatherDetails.forecast.forecastday[weekCount].date;
-      this.weekData[weekCount].summaryImage = this.weatherDetails.forecast.forecastday[weekCount].day.condition.icon;
-      this.weekData[weekCount].summaryText = this.weatherDetails.forecast.forecastday[weekCount].day.condition.text;
-      this.weekData[weekCount].tempMax = this.weatherDetails.forecast.forecastday[weekCount].day.maxtemp_c;
-      this.weekData[weekCount].tempMin = this.weatherDetails.forecast.forecastday[weekCount].day.mintemp_c;
+      this.weekData[weekCount].date = this.weatherDetails.forecast.forecastday[weekCount+1].date;
+      this.weekData[weekCount].summaryImage = this.weatherDetails.forecast.forecastday[weekCount+1].day.condition.icon;
+      this.weekData[weekCount].summaryText = this.weatherDetails.forecast.forecastday[weekCount+1].day.condition.text;
+      this.weekData[weekCount].tempMax = this.weatherDetails.forecast.forecastday[weekCount+1].day.maxtemp_c;
+      this.weekData[weekCount].tempMin = this.weatherDetails.forecast.forecastday[weekCount+1].day.mintemp_c;
       weekCount++;
     }
    }

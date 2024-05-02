@@ -26,7 +26,7 @@ export class WeatherContainerComponent implements OnInit {
     this.weatherService.getData(); // Fetch data from the WeatherService
 
     type EChartsOption = echarts.EChartsOption;
-    var chartDom = document.getElementById('graph')!;
+    var chartDom = document.getElementById('graph');
     var myChart = echarts.init(chartDom);
     var option: EChartsOption;
 
