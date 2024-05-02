@@ -6,13 +6,20 @@ import { TemperatureData } from '../Models/TemperatureData';
 import { TodayData } from '../Models/TodayData';
 import { Weekdata } from '../Models/WeekData';
 import { TodaysHighlight } from '../Models/TodaysHighlights';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { EnvironmentalVariables } from '../Environment/EnvironmentVariables';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class WeatherService {
+  // Observable to subscribe to changes in todaysHighlight.hours
+  private todaysHighlightSubject: Subject<string[]> = new Subject<string[]>();
+  private todaysHighlightMax_temps: Subject<number[]> = new Subject<number[]>();
+
+  public todaysHighlight$: Observable<string[]> = this.todaysHighlightSubject.asObservable();
+  public todaysHighlightMax_temps$: Observable<number[]> = this.todaysHighlightMax_temps.asObservable();
 
   cityName:string = 'Guwahati';
   noOfDays:number = 4;
@@ -35,6 +42,7 @@ export class WeatherService {
 
   constructor(private httpClient: HttpClient) {
     this.getData();
+    // this.fillTodaysHighlight();
    }
 
    fillTemperatureDataModel(){
@@ -54,7 +62,7 @@ export class WeatherService {
 
     const date1 = new Date(year, month - 1, day); // Month is 0-based in JavaScript Date object
     const formattedDate = date1.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
-    console.log("formattedDate",formattedDate);
+    // console.log("formattedDate",formattedDate);
     // this.temperatureData.date = this.weatherDetails.location.localtime.slice(0,10);
     this.temperatureData.date = formattedDate;
 
@@ -98,6 +106,8 @@ export class WeatherService {
    }
   }
 
+
+
   //method to get today's highlight data
   fillTodaysHighlight(){
     this.todaysHighlight.humidity = this.weatherDetails.current.humidity;
@@ -110,6 +120,25 @@ export class WeatherService {
     this.todaysHighlight.sunset = this.weatherDetails.forecast.forecastday[0].astro.sunset;
     this.todaysHighlight.uvIndex = this.weatherDetails.current.uv;
     this.todaysHighlight.rainfall = this.weatherDetails.forecast.forecastday[0].day.daily_chance_of_rain;
+    // this.todaysHighlight.hours = this.weatherDetails.forecast.forecastday[0].hour;
+    this.todaysHighlight.hours = [];
+    this.todaysHighlight.hourly_temp = [];
+
+
+    for(let i=0; i<24; i++){
+      const hourObject = this.weatherDetails.forecast.forecastday[0].hour[i];
+
+      if(hourObject){
+        this.todaysHighlight.hours.push(hourObject.time.slice(12,17));
+        this.todaysHighlight.hourly_temp.push(hourObject.temp_c);
+      } else {
+        this.todaysHighlight.hours.push("N/A");
+        this.todaysHighlight.hourly_temp.push(0);
+      }
+    }
+    console.log("times are",this.todaysHighlight.hours);
+    this.todaysHighlightSubject.next(this.todaysHighlight.hours);
+    this.todaysHighlightMax_temps.next(this.todaysHighlight.hourly_temp);
 
   }
 
@@ -119,10 +148,6 @@ export class WeatherService {
     this.threeDaysData();
     this.fillTodayData();
     this.fillTodaysHighlight();
-    console.log("hello biko");
-    console.log(this.temperatureData);
-    console.log(this.weekData);
-    console.log(this.todayData);
    }
 
 
@@ -162,6 +187,7 @@ export class WeatherService {
       next:(response)=>{
         this.locationDetails = response;
         console.log(this.locationDetails);
+        // console.log(this.todaysHighlight.hours);
         this.prepareData();
       }
     })
@@ -169,8 +195,8 @@ export class WeatherService {
     this.getWeatherReport(this.cityName, this.noOfDays).subscribe({
       next:(response)=>{
         this.weatherDetails = response;
-        console.log(this.cityName,this.noOfDays);
-        console.log(this.weatherDetails);
+        // console.log(this.cityName,this.noOfDays);
+        // console.log(this.weatherDetails);
         this.prepareData();
       }
     })

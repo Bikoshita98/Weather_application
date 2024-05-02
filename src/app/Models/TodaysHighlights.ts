@@ -12,4 +12,6 @@ export class TodaysHighlight{
     maxTemp:number;
     minTemp:number;
     rainfall:number;
+    hours:string[];
+    hourly_temp:number[];
 }
