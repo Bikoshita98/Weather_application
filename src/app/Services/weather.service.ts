@@ -36,12 +36,16 @@ export class WeatherService {
   temperatureData: TemperatureData;
   todayData?: TodayData[] = [];
   weekData?: Weekdata[] = []
-  todaysHighlight?:TodaysHighlight = new TodaysHighlight();
+  // todaysHighlight?:TodaysHighlight = new TodaysHighlight();
+  todaysHighlight?:TodaysHighlight;
   formattedDate: string;
 
 
   constructor(private httpClient: HttpClient) {
     this.getData();
+    this.weekData = [];
+    this.temperatureData = new TemperatureData();
+    this.todaysHighlight = new TodaysHighlight();
     // this.fillTodaysHighlight();
    }
 
@@ -82,6 +86,7 @@ export class WeatherService {
    //3 days data
    threeDaysData(){
     var weekCount = 0;
+    this.weekData = [];
 
     while(weekCount < 3){
       this.weekData.push(new Weekdata());
@@ -129,7 +134,7 @@ export class WeatherService {
       const hourObject = this.weatherDetails.forecast.forecastday[0].hour[i];
 
       if(hourObject){
-        this.todaysHighlight.hours.push(hourObject.time.slice(12,17));
+        this.todaysHighlight.hours.push(hourObject.time.slice(11,17));
         this.todaysHighlight.hourly_temp.push(hourObject.temp_c);
       } else {
         this.todaysHighlight.hours.push("N/A");
@@ -188,7 +193,7 @@ export class WeatherService {
         this.locationDetails = response;
         console.log(this.locationDetails);
         // console.log(this.todaysHighlight.hours);
-        this.prepareData();
+        // this.prepareData();
       }
     })
 
