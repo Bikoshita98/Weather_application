@@ -8,16 +8,6 @@ import * as echarts from 'echarts';
   styleUrls: ['./weather-container.component.scss']
 })
 
-
-// export class WeatherContainerComponent {
-// location: any;
-//   constructor(public weatherService:WeatherService){}
-//   onSearch(location:string){
-//     this.weatherService.cityName = location;
-//     this.weatherService.getData();
-//   }
-// }
-
 export class WeatherContainerComponent implements OnInit {
   location: any;
     constructor(public weatherService:WeatherService){}

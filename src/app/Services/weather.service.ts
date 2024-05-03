@@ -33,7 +33,7 @@ export class WeatherService {
 
   //variables that have the extracted data from the API endpoint variables
   // temperatureData: TemperatureData = new TemperatureData();
-  temperatureData: TemperatureData;
+  temperatureData?: TemperatureData;
   todayData?: TodayData[] = [];
   weekData?: Weekdata[] = []
   // todaysHighlight?:TodaysHighlight = new TodaysHighlight();
@@ -158,11 +158,21 @@ export class WeatherService {
 
    //method to get location details from the API using the variable cityName as the Input
 
+  // getLocationDetails(cityName:string):Observable<LocationDetails>{
+  //   return this.httpClient.get<LocationDetails>(EnvironmentalVariables.weatherApiForecastBaseUrl,{
+  //     headers: new HttpHeaders()
+  //     .set(EnvironmentalVariables.xRapidApiKeyName, EnvironmentalVariables.xRapidApiKeyValue)
+  //     .set(EnvironmentalVariables.xRapidApiHostName, EnvironmentalVariables.xRapidApiHostValue),
+  //     params: new HttpParams()
+  //     .set('q',cityName)
+
+  //   })
+  // }
+
   getLocationDetails(cityName:string):Observable<LocationDetails>{
     return this.httpClient.get<LocationDetails>(EnvironmentalVariables.weatherApiForecastBaseUrl,{
       headers: new HttpHeaders()
-      .set(EnvironmentalVariables.xRapidApiKeyName, EnvironmentalVariables.xRapidApiKeyValue)
-      .set(EnvironmentalVariables.xRapidApiHostName, EnvironmentalVariables.xRapidApiHostValue),
+      .set(EnvironmentalVariables.xRapidApiKeyName, EnvironmentalVariables.xRapidApiKeyValue),
       params: new HttpParams()
       .set('q',cityName)
 
@@ -174,8 +184,7 @@ export class WeatherService {
   getWeatherReport(cityName:string, noOfDays:number):Observable<WeatherDetails>{
     return this.httpClient.get<WeatherDetails>(EnvironmentalVariables.weatherApiForecastBaseUrl,{
       headers: new HttpHeaders()
-      .set(EnvironmentalVariables.xRapidApiKeyName, EnvironmentalVariables.xRapidApiKeyValue)
-      .set(EnvironmentalVariables.xRapidApiHostName, EnvironmentalVariables.xRapidApiHostValue),
+      .set(EnvironmentalVariables.xRapidApiKeyName, EnvironmentalVariables.xRapidApiKeyValue),
       params: new HttpParams()
       .set('q',cityName)
       .set('days',noOfDays)
