@@ -1,5 +1,5 @@
 
-        <div class="main-container p-5 max-w-7xl sm:h-full mx-auto md:my-12 lg:my-12 xl:mt-14 border-2 border-solid rounded-2xl border-sky-500 bg-white shadow-2xl">
+        <div class="main-container p-5 max-w-7xl sm:h-full mx-auto md:my-12 lg:my-10 xl:mt-9 border-2 border-solid rounded-2xl border-sky-500 bg-white shadow-2xl">
         <mat-toolbar class="flex justify-between bg-gray-800 rounded-md">
             <div>
                 <span class="font-semibold text-pink-300 sm:text-purple-500 md:text-green-500 lg:text-blue-600 xl:text-red-600 text-sm md:text-md lg:text-lg">Weather App</span>
@@ -16,11 +16,11 @@
                 <button class="button-color px-3 text-white font-semibold rounded-md shadow-md p-1 text-sm md:text-md lg:text-lg" (click)="onSearch(location.value)">Search</button>
             </div>
         </mat-toolbar>
-
+   
+    <!-- <div class="overall-container" *ngIf="weatherService.todaysHighlight?.rainfall !== undefined"> -->
+    <div class="overall-container">
     <div class="upper-data relative mt-3">
         <img class="absolute object-cover h-40 sm:h-44 md:h-52 lg:h-56 xl:h-60 w-full z-10 rounded-md" src="../assets/cold8.jpg">
-
-
             <span class="relative top-2 md:top-7 lg:top-6 left-14 md:left-20 lg:left-40 bg-pink-200 z-20">
                 <div>
                     <img class="relative" src="{{this.weatherService.todayData.summaryImage}}">
@@ -110,7 +110,7 @@
             </div>
         </div>
   
-        <div id="graph" class="mt-2 sm:mt-4 md:mt-4 lg:mt-4 xl:mt-0 container flex flex-col items-center border-slate-200 border-2 border-solid xl:ml-6 rounded-lg p-2">
+        <div id="graph" class="mt-2 sm:mt-4 md:mt-4 lg:mt-4 xl:mt-0 container flex flex-col items-center border-slate-200 border-2 border-solid xl:ml-6 rounded-lg p-2" >
 
         </div>
 
@@ -127,4 +127,9 @@
             </div>
         </div>
     </div>
+</div>
+<div class="mt-7 sm:mt-12 md:mt-20 lg:mt-16 xl:mt-20 lower-data container flex flex-col xl:flex-row lg:justify-between" *ngIf="weatherService.todaysHighlight?.rainfall === undefined">
+    Loading...
+    <div id="graph"></div>
+</div>
 </div>

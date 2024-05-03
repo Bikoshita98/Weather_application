@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LocationDetails } from '../Models/LocationDetails';
 import { WeatherDetails } from '../Models/WeatherDetails';
+import { SearchDetails } from '../Models/SearchDetails';
 import { TodayData } from '../Models/TodayData';
 import { ForecastData } from '../Models/ForecastData';
 import { TodaysHighlight } from '../Models/TodaysHighlights';
@@ -13,6 +14,9 @@ import { EnvironmentalVariables } from '../Environment/EnvironmentVariables';
 })
 
 export class WeatherService {
+  loading:boolean=true;
+  // echart:boolean=false;
+
   // Observable to subscribe to changes in todaysHighlight.hours
   private todaysHighlightSubject: Subject<string[]> = new Subject<string[]>();
   private todaysHighlightMax_temps: Subject<number[]> = new Subject<number[]>();
@@ -23,12 +27,14 @@ export class WeatherService {
 
   //variables to be used for API calls
   cityName:string = 'Guwahati';
+  // cityName:string;
   noOfDays:number = 4;
   dateParts:string[];
   currentTime:Date;
   currentDate:string;
 
   //variables which will be filled by API endpoints
+  searchDetails?: SearchDetails;
   locationDetails?: LocationDetails;
   weatherDetails?: WeatherDetails;
 
@@ -95,20 +101,6 @@ export class WeatherService {
     }
    }
 
-  //  fillTodayData(){
-  //   var todayCount = 0;
-
-  //   while(todayCount < 3){
-  //   this.todayData2.push(new TodayData());
-  //   // this.todayData[todayCount].tempMax = this.weatherDetails.forecast.forecastday[0].day.maxtemp_c;
-  //   // this.todayData[todayCount].tempMin = this.weatherDetails.forecast.forecastday[0].day.mintemp_c;
-  //     this.todayData[todayCount].time = this.weatherDetails.forecast.forecastday[0].hour[0].time.slice(11,16).toString();
-  //     todayCount++;
-  //  }
-  // }
-
-
-
   //method to get today's highlight data
   fillTodaysHighlight(){
     this.todaysHighlight.humidity = this.weatherDetails.current.humidity;
@@ -148,16 +140,24 @@ export class WeatherService {
    prepareData():void{
     this.fillTodayDetails();
     this.threeDaysData();
-    // this.fillTodayData();
     this.fillTodaysHighlight();
    }
 
-//method to get location details from the API using the variable cityName as the Input
+   //method to get location details from the API using the variable cityName as the Input
+  getSearchDetails(cityName:string):Observable<SearchDetails>{
+    return this.httpClient.get<SearchDetails>(EnvironmentalVariables.weatherApiSearchBaseUrl,{
+      headers: new HttpHeaders()
+      .set(EnvironmentalVariables.ApiKeyName, EnvironmentalVariables.ApiKeyValue),
+      params: new HttpParams()
+      .set('q',cityName)
+    })
+  }
 
+//method to get location details from the API using the variable cityName as the Input
   getLocationDetails(cityName:string):Observable<LocationDetails>{
     return this.httpClient.get<LocationDetails>(EnvironmentalVariables.weatherApiLocationBaseUrl,{
       headers: new HttpHeaders()
-      .set(EnvironmentalVariables.xRapidApiKeyName, EnvironmentalVariables.xRapidApiKeyValue),
+      .set(EnvironmentalVariables.ApiKeyName, EnvironmentalVariables.ApiKeyValue),
       params: new HttpParams()
       .set('q',cityName)
     })
@@ -167,7 +167,7 @@ export class WeatherService {
   getForecastReport(cityName:string, noOfDays:number):Observable<WeatherDetails>{
     return this.httpClient.get<WeatherDetails>(EnvironmentalVariables.weatherApiForecastBaseUrl,{
       headers: new HttpHeaders()
-      .set(EnvironmentalVariables.xRapidApiKeyName, EnvironmentalVariables.xRapidApiKeyValue),
+      .set(EnvironmentalVariables.ApiKeyName, EnvironmentalVariables.ApiKeyValue),
       params: new HttpParams()
       .set('q',cityName)
       .set('days',noOfDays)
@@ -189,12 +189,34 @@ export class WeatherService {
             this.weatherDetails = response;
             console.log(this.cityName,this.noOfDays);
             console.log("weather details are",this.weatherDetails);
+            this.loading=false;
             this.prepareData();
           }
         })
       }
     })
 
-    
+  
+    // this.getSearchDetails(this.cityName).subscribe({
+    //   next:(response)=>{
+    //     console.log("city name is",this.cityName);
+    //     this.searchDetails = response;
+    //     console.log("Search details are",this.searchDetails);
+    //     this.getLocationDetails(this.cityName).subscribe({
+    //       next:(response)=>{
+    //         this.locationDetails = response;
+    //         console.log("Location details are",this.locationDetails);
+    //       }
+    //     })
+    //     this.getForecastReport(this.cityName, this.noOfDays).subscribe({
+    //       next:(response)=>{
+    //         this.weatherDetails = response;
+    //         console.log(this.cityName,this.noOfDays);
+    //         console.log("weather details are",this.weatherDetails);
+    //         this.prepareData();
+    //       }
+    //     })
+    //   }
+    // })
   }
 }
