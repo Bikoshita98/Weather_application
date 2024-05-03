@@ -1,4 +1,4 @@
-export class Weekdata{
+export class ForecastData{
     day:string;
     summaryImage:string;
     summaryText:string;

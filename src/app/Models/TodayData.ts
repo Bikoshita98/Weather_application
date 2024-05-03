@@ -1,5 +1,10 @@
 export class TodayData{
-    time:string;
-    summaryImage:string;
     temperature:number;
+    summaryImage:string;
+    day:string;
+    date:string;
+    time:string;
+    summaryPhrase: string;
+    rainPercent:number;
+    location:string;
 }
