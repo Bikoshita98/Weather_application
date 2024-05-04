@@ -117,24 +117,58 @@ export class WeatherService {
     this.todaysHighlight.hourly_temp = [];
     console.log("humidity inside fill todays data",this.todaysHighlight.humidity);
 
-    for(let i=0; i<24; i++){
-      const hourObject = this.weatherDetails.forecast.forecastday[0].hour[i];
-
-      if(hourObject){
-        this.todaysHighlight.hours.push(hourObject.time.slice(11,17));
-        this.todaysHighlight.hourly_temp.push(hourObject.temp_c);
-      } else {
-        this.todaysHighlight.hours.push("N/A");
-        this.todaysHighlight.hourly_temp.push(0);
+      type EChartsOption = echarts.EChartsOption;
+      var chartDom = document.getElementById('graph');
+      console.log("value of chartdom",chartDom);
+      var myChart = echarts.init(chartDom);
+      console.log("value of mychart",myChart);
+      var option: EChartsOption;
+      for(let i=0; i<24; i++){
+        const hourObject = this.weatherDetails.forecast.forecastday[0].hour[i];
+  
+        if(hourObject){
+          this.todaysHighlight.hours.push(hourObject.time.slice(11,17));
+          this.todaysHighlight.hourly_temp.push(hourObject.temp_c);
+        } else {
+          this.todaysHighlight.hours.push("N/A");
+          this.todaysHighlight.hourly_temp.push(0);
+        }
       }
-    }
+    
       this.todaysHighlightHours.next(this.todaysHighlight.hours);
       this.todaysHighlightMax_temps.next(this.todaysHighlight.hourly_temp);
   
+      this.todaysHighlight$.subscribe(hours => {
+        console.log("graph started");
+        
+        if(hours){
+          this.todaysHighlightMax_temps$.subscribe(maxTemps => {
+            if (maxTemps) {
+          option = {
+            xAxis: {
+              type: 'category',
+              data: hours
+            },
+            yAxis: {
+              type: 'value'
+            },
+            series: [
+              {
+                // data: [820, 932, 901, 934, 1290, 1330, 1320],
+                data: maxTemps,
+                type: 'line',
+                smooth: true
+              }
+            ]
+          };
+      
+          option && myChart.setOption(option);
+        }})}
+      })
   }
 
    //method to create useful data chunks for UI using the data received from the API
-   async prepareData():Promise<void>{
+   prepareData():void{
     console.log(" inside prepareData");
     
     console.log("today details called");
@@ -146,11 +180,11 @@ export class WeatherService {
     console.log("three days filled");
 
     console.log("highlights called");
-    await this.fillTodaysHighlight();
+    this.fillTodaysHighlight();
     console.log("highlights filled");
 
     console.log("graph called");
-    // this.fillTodaysGraph();
+    this.fillTodaysGraph();
     console.log("graph filled");
 
    }
@@ -199,7 +233,6 @@ export class WeatherService {
             console.log("weather details are",this.weatherDetails);
             console.log("before prepare data");
             this.prepareData();
-            this.fillTodaysGraph();
             console.log("after prepare data");
           }
         })
