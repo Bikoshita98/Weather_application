@@ -70,49 +70,48 @@ import * as echarts from 'echarts';
   // }
 
   export class WeatherContainerComponent implements OnInit {
+
     location: any;
-      constructor(public weatherService:WeatherService){}
-  
+    constructor(public weatherService:WeatherService){}
+    
     ngOnInit(): void {
-      this.weatherService.getData(); // Fetch data from the WeatherService
-  
+      
+      this.weatherService.getData();
+
       type EChartsOption = echarts.EChartsOption;
       var chartDom = document.getElementById('graph');
+      console.log("value of chartdom",chartDom);
       var myChart = echarts.init(chartDom);
+      console.log("value of mychart",myChart);
       var option: EChartsOption;
-  
-      // Subscribe to changes in the weatherService.todaysHighlight.hours
-  
+
       this.weatherService.todaysHighlight$.subscribe(hours => {
-        if(hours){
-          this.weatherService.todaysHighlightMax_temps$.subscribe(maxTemps => {
-            if (maxTemps) {
-          option = {
-            xAxis: {
-              type: 'category',
-              data: hours
-            },
-            yAxis: {
-              type: 'value'
-            },
-            series: [
-              {
-                // data: [820, 932, 901, 934, 1290, 1330, 1320],
-                data: maxTemps,
-                type: 'line',
-                smooth: true
-              }
-            ]
-          };
-      
-          option && myChart.setOption(option);
-        }})}
-      })
-  
-      throw new Error('Method not implemented.');
+      if(hours){
+        this.weatherService.todaysHighlightMax_temps$.subscribe(maxTemps => {
+          if (maxTemps) {
+        option = {
+          xAxis: {
+            type: 'category',
+            data: hours
+          },
+          yAxis: {
+            type: 'value'
+          },
+          series: [
+            {
+              data: maxTemps,
+              type: 'line',
+              smooth: true
+            }
+          ]
+        };
+    
+        option && myChart.setOption(option);
+      }})}
+    })
+  }
+    onSearch(location:string){
+      this.weatherService.cityName = location;
+      this.weatherService.getData();
     }
-      onSearch(location:string){
-        this.weatherService.cityName = location;
-        this.weatherService.getData();
-      }
-    }
+  }

@@ -8,27 +8,28 @@ import { ForecastData } from '../Models/ForecastData';
 import { TodaysHighlight } from '../Models/TodaysHighlights';
 import { Observable, Subject } from 'rxjs';
 import { EnvironmentalVariables } from '../Environment/EnvironmentVariables';
+import * as echarts from 'echarts';
 
 @Injectable({
   providedIn: 'root'
 })
 
+//class to export weatherservice service
 export class WeatherService {
   loading:boolean=true;
-  // echart:boolean=false;
+  echart:boolean=false;
 
   // Observable to subscribe to changes in todaysHighlight.hours
-  private todaysHighlightSubject: Subject<string[]> = new Subject<string[]>();
+  private todaysHighlightHours: Subject<string[]> = new Subject<string[]>();
   private todaysHighlightMax_temps: Subject<number[]> = new Subject<number[]>();
 
-  public todaysHighlight$: Observable<string[]> = this.todaysHighlightSubject.asObservable();
+  public todaysHighlight$: Observable<string[]> = this.todaysHighlightHours.asObservable();
   public todaysHighlightMax_temps$: Observable<number[]> = this.todaysHighlightMax_temps.asObservable();
 
 
   //variables to be used for API calls
   cityName:string = 'Guwahati';
-  // cityName:string;
-  noOfDays:number = 4;
+  noOfDays:number = 3;
   dateParts:string[];
   currentTime:Date;
   currentDate:string;
@@ -39,26 +40,22 @@ export class WeatherService {
   weatherDetails?: WeatherDetails;
 
   //variables that have the extracted data from the API endpoint variables
-  // temperatureData: TemperatureData = new TemperatureData();
-  todayData?: TodayData;
-  forecastData?: ForecastData[] = []
+  // todayData?: TodayData = new TodayData();
+  // forecastData?: ForecastData[] = []
   // todaysHighlight?:TodaysHighlight = new TodaysHighlight();
-  todaysHighlight?:TodaysHighlight;
+  todayData?: TodayData = new TodayData();
+  forecastData?: ForecastData[] = []
+  todaysHighlight?:TodaysHighlight = new TodaysHighlight();
   formattedDate: string;
 
-
   constructor(private httpClient: HttpClient) {
-    this.getData();
-    this.forecastData = [];
-    this.todayData = new TodayData();
-    this.todaysHighlight = new TodaysHighlight();
-    // this.fillTodaysHighlight();
+    // this.getData();
    }
 
+   //method to fill today's weather details
    fillTodayDetails(){
     this.currentTime = new Date();
     this.currentDate = this.locationDetails.location.localtime.slice(0,10);
-    console.log("current date is",this.currentDate);
     this.todayData.temperature = this.weatherDetails.current.temp_c;
     this.todayData.location = this.weatherDetails.location.name;
     this.todayData.summaryImage = this.weatherDetails.current.condition.icon;
@@ -70,18 +67,18 @@ export class WeatherService {
     const month = parseInt(this.dateParts[1]);
     const day = parseInt(this.dateParts[2]);
 
-    const date1 = new Date(year, month - 1, day); // Month is 0-based in JavaScript Date object
-    const formattedDate = date1.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+    const date = new Date(year, month - 1, day); // Month is 0-based in JavaScript Date object
+    const formattedDate = date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
     this.todayData.date = formattedDate;
 
     const timeString = this.weatherDetails.location.localtime.slice(11,16);
     const [hours,minutes] = timeString.split(':').map(Number);
 
-    const date2 = new Date();
-    date2.setHours(hours);
-    date2.setMinutes(minutes);
+    const time = new Date();
+    time.setHours(hours);
+    time.setMinutes(minutes);
 
-    const formattedTime = date2.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+    const formattedTime = time.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
     this.todayData.time = formattedTime;
    }
 
@@ -92,11 +89,11 @@ export class WeatherService {
 
     while(dayCount < 3){
       this.forecastData.push(new ForecastData());
-      this.forecastData[dayCount].date = this.weatherDetails.forecast.forecastday[dayCount+1].date;
-      this.forecastData[dayCount].summaryImage = this.weatherDetails.forecast.forecastday[dayCount+1].day.condition.icon;
-      this.forecastData[dayCount].summaryText = this.weatherDetails.forecast.forecastday[dayCount+1].day.condition.text;
-      this.forecastData[dayCount].tempMax = this.weatherDetails.forecast.forecastday[dayCount+1].day.maxtemp_c;
-      this.forecastData[dayCount].tempMin = this.weatherDetails.forecast.forecastday[dayCount+1].day.mintemp_c;
+      this.forecastData[dayCount].date = this.weatherDetails.forecast.forecastday[dayCount].date;
+      this.forecastData[dayCount].summaryImage = this.weatherDetails.forecast.forecastday[dayCount].day.condition.icon;
+      this.forecastData[dayCount].summaryText = this.weatherDetails.forecast.forecastday[dayCount].day.condition.text;
+      this.forecastData[dayCount].tempMax = this.weatherDetails.forecast.forecastday[dayCount].day.maxtemp_c;
+      this.forecastData[dayCount].tempMin = this.weatherDetails.forecast.forecastday[dayCount].day.mintemp_c;
       dayCount++;
     }
    }
@@ -113,11 +110,12 @@ export class WeatherService {
     this.todaysHighlight.sunset = this.weatherDetails.forecast.forecastday[0].astro.sunset;
     this.todaysHighlight.uvIndex = this.weatherDetails.current.uv;
     this.todaysHighlight.rainfall = this.weatherDetails.forecast.forecastday[0].day.daily_chance_of_rain;
+  }
 
-    //variables for graph
+  fillTodaysGraph(){
     this.todaysHighlight.hours = [];
     this.todaysHighlight.hourly_temp = [];
-
+    console.log("humidity inside fill todays data",this.todaysHighlight.humidity);
 
     for(let i=0; i<24; i++){
       const hourObject = this.weatherDetails.forecast.forecastday[0].hour[i];
@@ -130,73 +128,84 @@ export class WeatherService {
         this.todaysHighlight.hourly_temp.push(0);
       }
     }
-    console.log("times are",this.todaysHighlight.hours);
-    this.todaysHighlightSubject.next(this.todaysHighlight.hours);
-    this.todaysHighlightMax_temps.next(this.todaysHighlight.hourly_temp);
-
+      this.todaysHighlightHours.next(this.todaysHighlight.hours);
+      this.todaysHighlightMax_temps.next(this.todaysHighlight.hourly_temp);
+  
   }
 
    //method to create useful data chunks for UI using the data received from the API
-   prepareData():void{
+   async prepareData():Promise<void>{
+    console.log(" inside prepareData");
+    
+    console.log("today details called");
     this.fillTodayDetails();
+    console.log("today details filled");
+
+    console.log("three days called");
     this.threeDaysData();
-    this.fillTodaysHighlight();
+    console.log("three days filled");
+
+    console.log("highlights called");
+    await this.fillTodaysHighlight();
+    console.log("highlights filled");
+
+    console.log("graph called");
+    // this.fillTodaysGraph();
+    console.log("graph filled");
+
    }
 
    //method to get location details from the API using the variable cityName as the Input
   getSearchDetails(cityName:string):Observable<SearchDetails>{
     return this.httpClient.get<SearchDetails>(EnvironmentalVariables.weatherApiSearchBaseUrl,{
-      headers: new HttpHeaders()
-      .set(EnvironmentalVariables.ApiKeyName, EnvironmentalVariables.ApiKeyValue),
-      params: new HttpParams()
-      .set('q',cityName)
+      headers: new HttpHeaders().set(EnvironmentalVariables.ApiKeyName, EnvironmentalVariables.ApiKeyValue),
+      params: new HttpParams().set('q',cityName)
     })
   }
 
 //method to get location details from the API using the variable cityName as the Input
   getLocationDetails(cityName:string):Observable<LocationDetails>{
     return this.httpClient.get<LocationDetails>(EnvironmentalVariables.weatherApiLocationBaseUrl,{
-      headers: new HttpHeaders()
-      .set(EnvironmentalVariables.ApiKeyName, EnvironmentalVariables.ApiKeyValue),
-      params: new HttpParams()
-      .set('q',cityName)
+      headers: new HttpHeaders().set(EnvironmentalVariables.ApiKeyName, EnvironmentalVariables.ApiKeyValue),
+      params: new HttpParams().set('q',cityName)
     })
   }
 
   //method to get forecast details from the API using the variables cityName and noOfDays as the Input
   getForecastReport(cityName:string, noOfDays:number):Observable<WeatherDetails>{
     return this.httpClient.get<WeatherDetails>(EnvironmentalVariables.weatherApiForecastBaseUrl,{
-      headers: new HttpHeaders()
-      .set(EnvironmentalVariables.ApiKeyName, EnvironmentalVariables.ApiKeyValue),
-      params: new HttpParams()
-      .set('q',cityName)
-      .set('days',noOfDays)
+      headers: new HttpHeaders().set(EnvironmentalVariables.ApiKeyName, EnvironmentalVariables.ApiKeyValue),
+      params: new HttpParams().set('q',cityName).set('days',noOfDays)
     })
   }
 
   getData(){
+    console.log("Entered get data");
+    
     this.forecastData = [];
     this.todayData = new TodayData();
     this.todaysHighlight = new TodaysHighlight();
 
     this.getLocationDetails(this.cityName).subscribe({
       next:(response)=>{
+        console.log("inside get location details");
         this.locationDetails = response;
         console.log("Location details are",this.locationDetails);
-        // this.prepareData();
         this.getForecastReport(this.cityName, this.noOfDays).subscribe({
           next:(response)=>{
+            console.log("inside get weather details");
             this.weatherDetails = response;
-            console.log(this.cityName,this.noOfDays);
+            // console.log(this.cityName,this.noOfDays);
             console.log("weather details are",this.weatherDetails);
-            this.loading=false;
+            console.log("before prepare data");
             this.prepareData();
+            this.fillTodaysGraph();
+            console.log("after prepare data");
           }
         })
       }
-    })
+    })}
 
-  
     // this.getSearchDetails(this.cityName).subscribe({
     //   next:(response)=>{
     //     console.log("city name is",this.cityName);
@@ -218,5 +227,5 @@ export class WeatherService {
     //     })
     //   }
     // })
+  // }
   }
-}
