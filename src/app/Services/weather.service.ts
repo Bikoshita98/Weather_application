@@ -116,7 +116,6 @@ export class WeatherService {
     this.todaysHighlight.hours = [];
     this.todaysHighlight.hourly_temp = [];
     console.log("humidity inside fill todays data",this.todaysHighlight.humidity);
-
       type EChartsOption = echarts.EChartsOption;
       var chartDom = document.getElementById('graph');
       console.log("value of chartdom",chartDom);
@@ -134,7 +133,8 @@ export class WeatherService {
           this.todaysHighlight.hourly_temp.push(0);
         }
       }
-    
+      // debugger
+      
       this.todaysHighlightHours.next(this.todaysHighlight.hours);
       this.todaysHighlightMax_temps.next(this.todaysHighlight.hourly_temp);
   

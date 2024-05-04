@@ -1,134 +1,326 @@
+<div
+  class="main-container p-5 max-w-7xl sm:h-full mx-auto md:my-12 lg:my-10 xl:mt-9 border-2 border-solid rounded-2xl border-sky-500 bg-white shadow-2xl"
+>
+  <mat-toolbar class="flex justify-between bg-gray-800 rounded-md">
+    <div>
+      <span
+        class="font-semibold text-pink-300 sm:text-purple-500 md:text-green-500 lg:text-blue-600 xl:text-red-600 text-sm md:text-md lg:text-lg"
+        >Weather App</span
+      >
+    </div>
+    <div class="space-x-2">
+      <input
+        type="search"
+        name="search"
+        id="search"
+        placeholder="Search City"
+        #location
+        (keyup.Enter)="onSearch(location.value)"
+        class="w-24 sm:w-30 md:w-40 lg:w-50 xl:w-60 rounded-lg focus:outline-none border border-gray-300 text-gray-400 px-4 py-1 text-sm md:text-md lg:text-lg"
+      />
+      <button
+        class="button-color px-3 text-white font-semibold rounded-md shadow-md p-1 text-sm md:text-md lg:text-lg"
+        (click)="onSearch(location.value)"
+      >
+        Search
+      </button>
+    </div>
+  </mat-toolbar>
 
-        <div class="main-container p-5 max-w-7xl sm:h-full mx-auto md:my-12 lg:my-10 xl:mt-9 border-2 border-solid rounded-2xl border-sky-500 bg-white shadow-2xl">
-        <mat-toolbar class="flex justify-between bg-gray-800 rounded-md">
-            <div>
-                <span class="font-semibold text-pink-300 sm:text-purple-500 md:text-green-500 lg:text-blue-600 xl:text-red-600 text-sm md:text-md lg:text-lg">Weather App</span>
-            </div>
-            <div class="space-x-2">
-                <input 
-                    type="search" 
-                    name="search" 
-                    id="search" 
-                    placeholder="Search City" 
-                    #location 
-                    (keyup.Enter)="onSearch(location.value)"
-                    class="w-24 sm:w-30 md:w-40 lg:w-50 xl:w-60 rounded-lg focus:outline-none border border-gray-300 text-gray-400 px-4 py-1 text-sm md:text-md lg:text-lg">
-                <button class="button-color px-3 text-white font-semibold rounded-md shadow-md p-1 text-sm md:text-md lg:text-lg" (click)="onSearch(location.value)">Search</button>
-            </div>
-        </mat-toolbar>
-   
-    <!-- <div class="overall-container" *ngIf="weatherService.todaysHighlight.humidity !== undefined"> -->
-    <div class="overall-container">
+  <div
+  class="absolute xl:mt-40 xl:ml-[35%] lower-data container flex flex-col xl:flex-row lg:justify-center items-center w-40"
+  *ngIf="weatherService.todaysHighlight?.rainfall === undefined"
+>
+  <div
+    class="h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-purple-600"
+    role="status"
+  ></div>
+  <div class="ml-2">Loading</div>
+</div>
+
+  <div
+    class="overall-container"
+    [ngClass]="{
+      invisible: weatherService.todaysHighlight.humidity === undefined
+    }"
+  >
     <div class="upper-data relative mt-3">
-        <img class="absolute object-cover h-40 sm:h-44 md:h-52 lg:h-56 xl:h-60 w-full z-10 rounded-md" src="../assets/cold8.jpg">
-            <span class="relative top-2 md:top-7 lg:top-6 left-14 md:left-20 lg:left-40 bg-pink-200 z-20">
-                <div>
-                    <img class="relative" src="{{this.weatherService.todayData.summaryImage}}">
-                    <div>
-                        <div class="relative text-sm md:text-base lg:text-lg text-black">{{this.weatherService.todayData.location}}</div>
-                        <div class="relative text-3xl md:text-5xl lg:text-6xl font-bold text-slate-800">
-                            {{ this.weatherService.todayData.temperature ? this.weatherService.todayData.temperature + '°C' : '' }}
-                        </div>
-                        <div class="relative text-sm md:text-base lg:text-lg text-black">{{this.weatherService.todayData.summaryPhrase}}</div>
-                    </div>
-                </div>
-            </span>
-
-            <div class="relative">
-                <div class="absolute bottom-16 right-0 z-20 p-4">
-                    <div class="relative text-md md:text-l lg:text-xl font-bold text-slate-800">{{this.weatherService.todayData.date}}</div>
-                    <div class="text-black">{{this.weatherService.todayData.time}}</div>
-                </div>
+      <img
+        class="absolute object-cover h-40 sm:h-44 md:h-52 lg:h-56 xl:h-60 w-full z-10 rounded-md"
+        src="../assets/cold8.jpg"
+      />
+      <span
+        class="relative top-2 md:top-7 lg:top-6 left-14 md:left-20 lg:left-40 bg-pink-200 z-20"
+      >
+        <div>
+          <img
+            class="relative"
+            src="{{ this.weatherService.todayData.summaryImage }}"
+          />
+          <div>
+            <div class="relative text-sm md:text-base lg:text-lg text-black">
+              {{ this.weatherService.todayData.location }}
             </div>
+            <div
+              class="relative text-3xl md:text-5xl lg:text-6xl font-bold text-slate-800"
+            >
+              {{
+                this.weatherService.todayData.temperature
+                  ? this.weatherService.todayData.temperature + "°C"
+                  : ""
+              }}
+            </div>
+            <div class="relative text-sm md:text-base lg:text-lg text-black">
+              {{ this.weatherService.todayData.summaryPhrase }}
+            </div>
+          </div>
+        </div>
+      </span>
+
+      <div class="relative">
+        <div class="absolute bottom-16 right-0 z-20 p-4">
+          <div
+            class="relative text-md md:text-l lg:text-xl font-bold text-slate-800"
+          >
+            {{ this.weatherService.todayData.date }}
+          </div>
+          <div class="text-black">{{ this.weatherService.todayData.time }}</div>
+        </div>
+      </div>
     </div>
-    
-            <div class="mt-7 sm:mt-12 md:mt-20 lg:mt-16 xl:mt-20 lower-data container flex flex-col xl:flex-row lg:justify-between">
 
-        <div class="container border-slate-200 border-2 border-solid flex flex-col justify-around items-center max-w-full p-2 rounded-lg">
-            <div class="relative text-center font-bold text-red-500 text-xs md:text-sm lg:text-md p-2">Today's Summary</div>
-            <div class="container flex flex-row justify-between">
-                <div class="container flex flex-col justify-between items-center">
-                    <span class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md">Rainfall</span>
-                    <div class="flex flex-row">
-                        <img src="../assets/rainfall.png" class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10">
-                        <span class="text-xs md:text-sm lg:text-md mt-1 ml-2">{{this.weatherService.todaysHighlight.rainfall? this.weatherService.todaysHighlight.rainfall + ' %' : '' }}</span>
-                    </div>
-                    <br>
-                    <span class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md" >Humidity</span>
-                    
-                    <div class="flex flex-row">
-                        <img src="../assets/humidity.png" class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10">
-                        <span class="text-xs md:text-sm lg:text-md mt-1 ml-2">{{this.weatherService.todaysHighlight.humidity? this.weatherService.todaysHighlight.humidity + ' %' : '' }}</span>
-                    </div>
-                    <br>
-                    <span class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md">Visibility</span>
-                    <div class="flex flex-row">
-                        <img src="../assets/vision.png" class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10">
-                        <span class="text-xs md:text-sm lg:text-md mt-1 ml-2">{{this.weatherService.todaysHighlight.visibility? this.weatherService.todaysHighlight.visibility + ' km' : '' }}</span>
-                    </div>
-                </div>
-                <div class="container flex flex-col justify-between items-center">
-                    
-                    <span class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md">Wind Speed</span>
-                    <div class="flex flex-row">
-                        <img src="../assets/wind_s.png" class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10">
-                        <span class="text-xs md:text-sm lg:text-md mt-1 ml-2">{{this.weatherService.todaysHighlight.windSpeed? this.weatherService.todaysHighlight.windSpeed + ' kph' : '' }}</span>
-                    </div>
-                    <br>
-                    <span class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md">Wind Direction</span>
-                    <div class="flex flex-row">
-                        <img src="../assets/wind-direction.png" class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10">
-                        <span class="text-xs md:text-sm lg:text-md mt-1 ml-2">{{this.weatherService.todaysHighlight.windDirection? this.weatherService.todaysHighlight.windDirection : '' }}</span>
-                    </div>
-                    <br>
-                    <span class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md">Sunrise</span>
-                    <div class="flex flex-row">
-                        <img src="../assets/sunrise.png" class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10">
-                        <span class="text-xs md:text-sm lg:text-md mt-1 ml-2">{{this.weatherService.todaysHighlight.sunrise? this.weatherService.todaysHighlight.sunrise : '' }}</span>
-                    </div>
-                </div>
-
-                <div class="container flex flex-col justify-between items-center">
-                    <span class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md">Pressure</span>
-                    <div class="flex flex-row">
-                        <img src="../assets/pressure.png" class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10">
-                        <span class="text-xs md:text-sm lg:text-md mt-1 ml-2">{{this.weatherService.todaysHighlight.pressure? this.weatherService.todaysHighlight.pressure + ' mb' : '' }}</span>
-                    </div>
-                    <br>
-                    <span class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md">Uv index</span>
-                    <div class="flex flex-row">
-                        <img src="../assets/uv-index.png" class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10">
-                        <span class="text-xs md:text-sm lg:text-md mt-1 ml-2">{{this.weatherService.todaysHighlight.uvIndex? this.weatherService.todaysHighlight.uvIndex : '' }}</span>
-                    </div>
-                    <br>
-                    <span class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md">Sunset</span>
-                    <div class="flex flex-row">
-                        <img src="../assets/sunset.png" class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10">
-                        <span class="text-xs md:text-sm lg:text-md mt-1 ml-2">{{this.weatherService.todaysHighlight.sunset? this.weatherService.todaysHighlight.sunset : '' }}</span>
-                    </div>
-                </div>
+    <div
+      class="mt-7 sm:mt-12 md:mt-20 lg:mt-16 xl:mt-20 lower-data container flex flex-col xl:flex-row lg:justify-between"
+    >
+      <div
+        class="container border-slate-200 border-2 border-solid flex flex-col justify-around items-center max-w-full p-2 rounded-lg"
+      >
+        <div
+          class="relative text-center font-bold text-red-500 text-xs md:text-sm lg:text-md p-2"
+        >
+          Today's Summary
+        </div>
+        <div class="container flex flex-row justify-between">
+          <div class="container flex flex-col justify-between items-center">
+            <span
+              class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md"
+              >Rainfall</span
+            >
+            <div class="flex flex-row">
+              <img
+                src="../assets/rainfall.png"
+                class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10"
+              />
+              <span class="text-xs md:text-sm lg:text-md mt-1 ml-2">{{
+                this.weatherService.todaysHighlight.rainfall
+                  ? this.weatherService.todaysHighlight.rainfall + " %"
+                  : ""
+              }}</span>
             </div>
-        </div>
-  
-        <div id="graph" class="mt-2 sm:mt-4 md:mt-4 lg:mt-4 xl:mt-0 container flex flex-col items-center border-slate-200 border-2 border-solid xl:ml-6 rounded-lg p-2">
+            <br />
+            <span
+              class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md"
+              >Humidity</span
+            >
 
-        </div>
-
-            <div class="mt-2 sm:mt-4 md:mt-4 lg:mt-4 xl:mt-0 container flex flex-col lg:justify-evenly border-slate-200 border-2 border-solid xl:ml-6 rounded-lg p-2">
-            <div class="relative text-center font-bold text-red-500 text-xs md:text-sm lg:text-md p-1"> Next 3 Days forecast</div>
-            <div class="container flex justify-between items-center">
-                <div class="card flex flex-col items-center" *ngFor="let card of weatherService.forecastData">
-                    <div class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md">{{card.date}}</div>
-                    <img class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-14 xl:h-14" src={{card.summaryImage}} alt="">
-                    <div class="relative font-bold  text-red-500 text-xs md:text-sm lg:text-md">{{card.summaryText}}</div>
-                    <div class="relative font-medium text-blue-800 text-xs md:text-sm lg:text-md">Min temp : {{card.tempMin}}</div>
-                    <div class="relative font-medium text-blue-800 text-xs md:text-sm lg:text-md">Max temp : {{card.tempMax}}</div>
-                </div>
+            <div class="flex flex-row">
+              <img
+                src="../assets/humidity.png"
+                class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10"
+              />
+              <span class="text-xs md:text-sm lg:text-md mt-1 ml-2">{{
+                this.weatherService.todaysHighlight.humidity
+                  ? this.weatherService.todaysHighlight.humidity + " %"
+                  : ""
+              }}</span>
             </div>
+            <br />
+            <span
+              class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md"
+              >Visibility</span
+            >
+            <div class="flex flex-row">
+              <img
+                src="../assets/vision.png"
+                class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10"
+              />
+              <span class="text-xs md:text-sm lg:text-md mt-1 ml-2">{{
+                this.weatherService.todaysHighlight.visibility
+                  ? this.weatherService.todaysHighlight.visibility + " km"
+                  : ""
+              }}</span>
+            </div>
+          </div>
+          <div class="container flex flex-col justify-between items-center">
+            <span
+              class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md"
+              >Wind Speed</span
+            >
+            <div class="flex flex-row">
+              <img
+                src="../assets/wind_s.png"
+                class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10"
+              />
+              <span class="text-xs md:text-sm lg:text-md mt-1 ml-2">{{
+                this.weatherService.todaysHighlight.windSpeed
+                  ? this.weatherService.todaysHighlight.windSpeed + " kph"
+                  : ""
+              }}</span>
+            </div>
+            <br />
+            <span
+              class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md"
+              >Wind Direction</span
+            >
+            <div class="flex flex-row">
+              <img
+                src="../assets/wind-direction.png"
+                class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10"
+              />
+              <span class="text-xs md:text-sm lg:text-md mt-1 ml-2">{{
+                this.weatherService.todaysHighlight.windDirection
+                  ? this.weatherService.todaysHighlight.windDirection
+                  : ""
+              }}</span>
+            </div>
+            <br />
+            <span
+              class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md"
+              >Sunrise</span
+            >
+            <div class="flex flex-row">
+              <img
+                src="../assets/sunrise.png"
+                class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10"
+              />
+              <span class="text-xs md:text-sm lg:text-md mt-1 ml-2">{{
+                this.weatherService.todaysHighlight.sunrise
+                  ? this.weatherService.todaysHighlight.sunrise
+                  : ""
+              }}</span>
+            </div>
+          </div>
+
+          <div class="container flex flex-col justify-between items-center">
+            <span
+              class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md"
+              >Pressure</span
+            >
+            <div class="flex flex-row">
+              <img
+                src="../assets/pressure.png"
+                class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10"
+              />
+              <span class="text-xs md:text-sm lg:text-md mt-1 ml-2">{{
+                this.weatherService.todaysHighlight.pressure
+                  ? this.weatherService.todaysHighlight.pressure + " mb"
+                  : ""
+              }}</span>
+            </div>
+            <br />
+            <span
+              class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md"
+              >Uv index</span
+            >
+            <div class="flex flex-row">
+              <img
+                src="../assets/uv-index.png"
+                class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10"
+              />
+              <span class="text-xs md:text-sm lg:text-md mt-1 ml-2">{{
+                this.weatherService.todaysHighlight.uvIndex
+                  ? this.weatherService.todaysHighlight.uvIndex
+                  : ""
+              }}</span>
+            </div>
+            <br />
+            <span
+              class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md"
+              >Sunset</span
+            >
+            <div class="flex flex-row">
+              <img
+                src="../assets/sunset.png"
+                class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-10 xl:h-10"
+              />
+              <span class="text-xs md:text-sm lg:text-md mt-1 ml-2">{{
+                this.weatherService.todaysHighlight.sunset
+                  ? this.weatherService.todaysHighlight.sunset
+                  : ""
+              }}</span>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <div
+        id="graph"
+        class="mt-2 sm:mt-4 md:mt-4 lg:mt-4 xl:mt-0 container flex flex-col items-center border-slate-200 border-2 border-solid xl:ml-6 rounded-lg p-2"
+      ></div>
+
+      <div
+        class="mt-2 sm:mt-4 md:mt-4 lg:mt-4 xl:mt-0 container flex flex-col lg:justify-evenly border-slate-200 border-2 border-solid xl:ml-6 rounded-lg p-2"
+      >
+        <div
+          class="relative text-center font-bold text-red-500 text-xs md:text-sm lg:text-md p-1"
+        >
+          Next 3 Days forecast
+        </div>
+        <div class="container flex justify-between items-center">
+          <div
+            class="card flex flex-col items-center"
+            *ngFor="let card of weatherService.forecastData"
+          >
+            <div
+              class="relative font-bold text-blue-800 text-xs md:text-sm lg:text-md"
+            >
+              {{ card.date }}
+            </div>
+            <img
+              class="w-7 h-7 sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 xl:w-14 xl:h-14"
+              src="{{ card.summaryImage }}"
+              alt=""
+            />
+            <div
+              class="relative font-bold text-red-500 text-xs md:text-sm lg:text-md"
+            >
+              {{ card.summaryText }}
+            </div>
+            <div
+              class="relative font-medium text-blue-800 text-xs md:text-sm lg:text-md"
+            >
+              Min temp : {{ card.tempMin }}
+            </div>
+            <div
+              class="relative font-medium text-blue-800 text-xs md:text-sm lg:text-md"
+            >
+              Max temp : {{ card.tempMax }}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
-<div class="mt-7 sm:mt-12 md:mt-20 lg:mt-16 xl:mt-20 lower-data container flex flex-col xl:flex-row lg:justify-between" *ngIf="weatherService.todaysHighlight?.rainfall === undefined">
-    Loading...
-</div>
+  </div>
+  <!-- <div class="mt-7 sm:mt-12 md:mt-20 lg:mt-16 xl:mt-20 lower-data container flex flex-col xl:flex-row lg:justify-between" style="
+position: absolute;
+background: white;
+opacity: 100%;
+height: 67%;
+margin: -45.5% -21px;
+z-index: 99;
+padding: 24% 37%;
+font-size: 4rem;
+" *ngIf="true"> -->
+  <!-- <div class="mt-7 sm:mt-12 md:mt-20 lg:mt-16 xl:mt-20 lower-data container flex flex-col xl:flex-row lg:justify-between" *ngIf="true"> -->
+
+  <!-- <div class="mt-7 sm:mt-12 md:mt-20 lg:mt-16 xl:mt-20 lower-data container flex flex-col xl:flex-row lg:justify-between  bg-green-400" *ngIf="weatherService.todaysHighlight?.rainfall===undefined"> -->
+  <!-- <div
+    class="lg:mt-16 lower-data container flex flex-col xl:flex-row lg:justify-between bg-green-400"
+    *ngIf="weatherService.todaysHighlight?.rainfall === undefined"
+  >
+    <div
+      class="h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-purple-600"
+      role="status"
+    ></div>
+  </div> -->
 </div>

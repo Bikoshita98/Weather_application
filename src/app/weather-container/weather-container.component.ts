@@ -74,47 +74,52 @@ import * as echarts from 'echarts';
     location: any;
     constructor(public weatherService:WeatherService){}
     
-//code where echarts works during initialisation
+// code where echarts works during initialisation
 
-  //   ngOnInit(): void {
-  //     this.weatherService.getData();
+    ngOnInit(): void {
+      this.weatherService.getData();
 
-  //     type EChartsOption = echarts.EChartsOption;
-  //     var chartDom = document.getElementById('graph');
-  //     console.log("value of chartdom",chartDom);
-  //     var myChart = echarts.init(chartDom);
-  //     console.log("value of mychart",myChart);
-  //     var option: EChartsOption;
+      type EChartsOption = echarts.EChartsOption;
+      var chartDom = document.getElementById('graph');
+      console.log("value of chartdom",chartDom);
+      var myChart = echarts.init(chartDom);
+      console.log("value of mychart",myChart);
+      var option: EChartsOption;
 
-  //     this.weatherService.todaysHighlight$.subscribe(hours => {
-  //     if(hours){
-  //       this.weatherService.todaysHighlightMax_temps$.subscribe(maxTemps => {
-  //         if (maxTemps) {
-  //       option = {
-  //         xAxis: {
-  //           type: 'category',
-  //           data: hours
-  //         },
-  //         yAxis: {
-  //           type: 'value'
-  //         },
-  //         series: [
-  //           {
-  //             data: maxTemps,
-  //             type: 'line',
-  //             smooth: true
-  //           }
-  //         ]
-  //       };
+      this.weatherService.todaysHighlight$.subscribe(hours => {
+      if(hours){
+        this.weatherService.todaysHighlightMax_temps$.subscribe(maxTemps => {
+          if (maxTemps) {
+        option = {
+          xAxis: {
+            type: 'category',
+            data: hours
+          },
+          yAxis: {
+            type: 'value'
+          },
+          series: [
+            {
+              data: maxTemps,
+              type: 'line',
+              smooth: true
+            }
+          ]
+        };
     
-  //       option && myChart.setOption(option);
-  //     }})}
-  //   })
+        option && myChart.setOption(option);
+      }})}
+    })
+  }
+
+  // ngOnInit(): void {
+  //   this.loadData();
   // }
 
-  ngOnInit(): void {
-    this.weatherService.getData();
-  }
+  // private loadData(): void {
+  //   ;
+  //   console.log(this.weatherService.getData(), 'satya')
+  // }
     onSearch(location:string){
       this.weatherService.cityName = location;
       this.weatherService.getData();
