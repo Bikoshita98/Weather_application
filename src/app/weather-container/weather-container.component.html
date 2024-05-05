@@ -27,16 +27,36 @@
     </div>
   </mat-toolbar>
 
-  <div
-  class="absolute xl:mt-40 xl:ml-[35%] lower-data container flex flex-col xl:flex-row lg:justify-center items-center w-40"
-  *ngIf="weatherService.todaysHighlight?.rainfall === undefined"
+  <!-- <div
+  class="absolute xl:mt-50 xl:ml-auto lower-data container flex flex-col lg:justify-center items-center w-40 bg-blue-300"
+  *ngIf="weatherService.todaysHighlight?.humidity === undefined"
 >
   <div
     class="h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-purple-600"
     role="status"
   ></div>
   <div class="ml-2">Loading</div>
+</div> -->
+
+
+<div class="relative bg-blue-300 flex justify-center items-center mt-40 sm:mt-40 md:mt-40 lg:mt-40 xl:mt-40" *ngIf="weatherService.todaysHighlight?.rainfall === undefined">
+    <div
+    class="h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-purple-600"
+    role="status"
+  ></div>
+
 </div>
+
+<!-- <div
+class="absolute mt-40 ml-[30%] sm:mt-40 sm:ml-[35%] md:mt-40 md:ml-[40%] lg:mt-40 lg:ml-[40%] xl:mt-40 xl:ml-[35%] lower-data container flex flex-col xl:flex-row lg:justify-center items-center w-40"
+*ngIf="weatherService.todaysHighlight?.rainfall === undefined"
+>
+<div
+  class="h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-purple-600"
+  role="status"
+></div>
+<div class="ml-2">Loading</div>
+</div> -->
 
   <div
     class="overall-container"

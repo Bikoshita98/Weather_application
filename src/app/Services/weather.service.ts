@@ -113,6 +113,7 @@ export class WeatherService {
   }
 
   fillTodaysGraph(){
+    
     this.todaysHighlight.hours = [];
     this.todaysHighlight.hourly_temp = [];
     console.log("humidity inside fill todays data",this.todaysHighlight.humidity);
@@ -122,6 +123,7 @@ export class WeatherService {
       var myChart = echarts.init(chartDom);
       console.log("value of mychart",myChart);
       var option: EChartsOption;
+
       for(let i=0; i<24; i++){
         const hourObject = this.weatherDetails.forecast.forecastday[0].hour[i];
   
