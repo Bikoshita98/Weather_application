@@ -6,5 +6,7 @@ export class TodayData{
     time:string;
     summaryPhrase: string;
     rainPercent:number;
-    location:string;
+    city:string;
+    country:string;
+    region:string;
 }
