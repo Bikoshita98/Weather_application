@@ -8,7 +8,7 @@ import { ForecastData } from '../Models/ForecastData';
 import { TodaysHighlight } from '../Models/TodaysHighlights';
 import { Observable, Subject } from 'rxjs';
 import { EnvironmentalVariables } from '../Environment/EnvironmentVariables';
-import * as echarts from 'echarts';
+
 
 @Injectable({
   providedIn: 'root',
