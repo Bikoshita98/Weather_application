@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WeatherContainerComponent } from './weather-container/weather-container.component';
-import { DummyComponent } from './dummy/dummy.component';
 import { MaterialModule } from './material/material.module';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -13,7 +12,6 @@ import { HttpClientModule } from '@angular/common/http';
   declarations: [
     AppComponent,
     WeatherContainerComponent,
-    DummyComponent
   ],
   imports: [
     BrowserModule,
