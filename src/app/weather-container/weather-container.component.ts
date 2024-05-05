@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WeatherService } from '../Services/weather.service';
 import * as echarts from 'echarts';
 

@@ -1,19 +1,17 @@
-.main-container{
-    // height: 90%;
-    border-color: #8b9aff;
+
+$main-container-border-color: #8b9aff;
+$button-color-bg-default: #8b9aff;
+$button-color-bg-hover: #f3cac4;
+
+.main-container {
+  border-color: $main-container-border-color;
 }
 
-.toolbar {
-    // height:50px;
-
-}
-
-.button-color{
-        background-color: #8b9aff;
-}
-
-.button-color:hover{
-    background-color: #f3cac4;
+.button-color {
+  background-color: $button-color-bg-default;
+  &:hover {
+    background-color: $button-color-bg-hover;
+  }
 }
 
 

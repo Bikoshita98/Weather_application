@@ -16,7 +16,7 @@ import * as echarts from 'echarts';
 
 //class to export weatherservice service
 export class WeatherService {
-  location_present:boolean;
+  location_present: boolean;
 
   // Observable to subscribe to changes in todaysHighlight.hours
   private todaysHighlightHours: Subject<string[]> = new Subject<string[]>();
@@ -40,23 +40,17 @@ export class WeatherService {
   weatherDetails?: WeatherDetails;
 
   //variables that have the extracted data from the API endpoint variables
-  // todayData?: TodayData = new TodayData();
-  // forecastData?: ForecastData[] = []
-  // todaysHighlight?:TodaysHighlight = new TodaysHighlight();
   todayData?: TodayData = new TodayData();
   forecastData?: ForecastData[] = [];
   todaysHighlight?: TodaysHighlight = new TodaysHighlight();
   formattedDate: string;
 
-  constructor(private httpClient: HttpClient) {
-    // this.getData();
-  }
+  constructor(private httpClient: HttpClient) {}
 
   //method to fill today's weather details
   fillTodayDetails() {
     this.currentTime = new Date();
     this.currentDate = this.weatherDetails.location.localtime.slice(0, 10);
-    // this.todayData.city = this.weatherDetails.location.name;
     this.todayData.city = this.weatherDetails.location.name;
     this.todayData.region = this.weatherDetails.location.region;
     this.todayData.country = this.weatherDetails.location.country;
@@ -132,18 +126,14 @@ export class WeatherService {
       this.weatherDetails.forecast.forecastday[0].day.daily_chance_of_rain;
   }
 
+  //method to get today's graph
   fillTodaysGraph() {
     this.todaysHighlight.hours = [];
     this.todaysHighlight.hourly_temp = [];
-    console.log(
-      'humidity inside fill todays data',
-      this.todaysHighlight.humidity
-    );
+
     type EChartsOption = echarts.EChartsOption;
     var chartDom = document.getElementById('graph');
-    console.log('value of chartdom', chartDom);
     var myChart = echarts.init(chartDom);
-    console.log('value of mychart', myChart);
     var option: EChartsOption;
 
     for (let i = 0; i < 24; i++) {
@@ -157,7 +147,6 @@ export class WeatherService {
         this.todaysHighlight.hourly_temp.push(0);
       }
     }
-    // debugger
 
     this.todaysHighlightHours.next(this.todaysHighlight.hours);
     this.todaysHighlightMax_temps.next(this.todaysHighlight.hourly_temp);
@@ -178,7 +167,6 @@ export class WeatherService {
               },
               series: [
                 {
-                  // data: [820, 932, 901, 934, 1290, 1330, 1320],
                   data: maxTemps,
                   type: 'line',
                   smooth: true,
@@ -246,52 +234,32 @@ export class WeatherService {
     );
   }
 
+
   getData() {
     this.forecastData = [];
     this.todayData = new TodayData();
     this.todaysHighlight = new TodaysHighlight();
     this.location_present = true;
 
-    // this.getLocationDetails(this.cityName).subscribe({
-    //   next: (response) => {
-    //     console.log("response is",response);
-        
-    //     this.locationDetails = response;
-    //     console.log('Location details are', this.locationDetails);
-    //     this.getForecastReport(this.cityName, this.noOfDays).subscribe({
-    //       next: (response) => {
-    //         this.weatherDetails = response;
-    //         console.log('weather details are', this.weatherDetails);
-    //         this.prepareData();
-    //       },
-    //     });
-    //   },
-    // });
-
     this.getLocationDetails(this.cityName).subscribe({
       next: (response) => {
         this.locationDetails = response;
-        console.log("Location details are", this.locationDetails);
-        
+
         this.getForecastReport(this.cityName, this.noOfDays).subscribe({
           next: (response) => {
             this.weatherDetails = response;
-            console.log("Weather details are", this.weatherDetails);
             this.prepareData();
           },
         });
       },
       error: (err) => {
-        console.log("error error is", err.error.error);
+
         if (err.error && err.error.error.code === 1006) {
-          console.log("Error:", err.error.error.message);
           this.location_present = false;
-          // alert("Location not found");
         } else {
-          console.error("An unexpected error occurred:", err);
+          console.error('An unexpected error occurred:', err);
         }
-      }
+      },
     });
-    
   }
 }
