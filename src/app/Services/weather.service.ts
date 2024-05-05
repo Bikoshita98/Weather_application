@@ -131,11 +131,6 @@ export class WeatherService {
     this.todaysHighlight.hours = [];
     this.todaysHighlight.hourly_temp = [];
 
-    type EChartsOption = echarts.EChartsOption;
-    var chartDom = document.getElementById('graph');
-    var myChart = echarts.init(chartDom);
-    var option: EChartsOption;
-
     for (let i = 0; i < 24; i++) {
       const hourObject = this.weatherDetails.forecast.forecastday[0].hour[i];
 
@@ -151,34 +146,6 @@ export class WeatherService {
     this.todaysHighlightHours.next(this.todaysHighlight.hours);
     this.todaysHighlightMax_temps.next(this.todaysHighlight.hourly_temp);
 
-    this.todaysHighlight$.subscribe((hours) => {
-      console.log('graph started');
-
-      if (hours) {
-        this.todaysHighlightMax_temps$.subscribe((maxTemps) => {
-          if (maxTemps) {
-            option = {
-              xAxis: {
-                type: 'category',
-                data: hours,
-              },
-              yAxis: {
-                type: 'value',
-              },
-              series: [
-                {
-                  data: maxTemps,
-                  type: 'line',
-                  smooth: true,
-                },
-              ],
-            };
-
-            option && myChart.setOption(option);
-          }
-        });
-      }
-    });
   }
 
   //method to create useful data chunks for UI using the data received from the API
